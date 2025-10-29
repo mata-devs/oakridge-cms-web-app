@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Grand Hyatt - Interactive Map",
-  description: "Grand Hyatt",
+  title: "Oakridge - Interactive Map",
+  description: "Oakridge",
 };
 
 export default function RootLayout({
