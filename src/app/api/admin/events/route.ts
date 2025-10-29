@@ -68,6 +68,7 @@ export async function POST(req: Request) {
     unpublish_at: body.unpublishAt ?? null,
     order: body.order ?? 0,
     updated_by: user.id,
+    hotspot_group: body.hotspot_group ?? null
   };
 
   const { data, error } = await supabase

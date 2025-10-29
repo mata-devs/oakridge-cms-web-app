@@ -21,9 +21,9 @@ export async function GET(req: Request) {
     const { data: { user } } = await supaServer.auth.getUser();
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-    // 2) Caller role from profiles (trusted source)
+    // 2) Caller role from users (trusted source)
     const { data: me, error: meErr } = await supaServer
-      .from('profiles')
+      .from('users')
       .select('role, disabled')
       .eq('id', user.id)
       .single();
@@ -47,15 +47,15 @@ export async function GET(req: Request) {
     const { data, error } = await supaAdmin.auth.admin.listUsers({ page, perPage });
     if (error) throw error;
 
-    // 4) Join with profiles to get roles/flags from DB
+    // 4) Join with users to get roles/flags from DB
     const ids = data.users.map(u => u.id);
-    const { data: profiles, error: pErr } = await supaAdmin
-      .from('profiles')
+    const { data: users, error: pErr } = await supaAdmin
+      .from('users')
       .select('id, display_name, role, disabled, created_at')
       .in('id', ids);
     if (pErr) throw pErr;
 
-    const profileById = new Map(profiles.map(p => [p.id, p]));
+    const profileById = new Map(users.map(p => [p.id, p]));
 
     // 5) Map and filter: admins cannot see super-admins
     const items = data.users

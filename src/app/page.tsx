@@ -1,94 +1,79 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
-
-// import Image from 'next/image';
-// import grandhyattmodel from "../app/assets/grandhyatt-resized.png"
-import EventModalOverlay from './components/EventModalOverlay';
-import { fetchEventsForClient, EventType, formatDateRange, to12h, fetchSeasons, Season, formatTimeRange } from './components/helpersAndInputs';
-import { useEffect, useState } from 'react';
-import { IoInformationCircleSharp } from "react-icons/io5";
-import SeasonOverlay from './components/SeasonOverlay';
-import KrpanoViewer from './components/KrpanoViewer';
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import EventModalOverlay from "./components/EventModalOverlay";
+import { fetchEventsForClient, EventType, formatDateRange, formatTimeRange } from "./components/helpersAndInputs";
+import KrpanoHotspotViewer from "./components/KrpanoHotspotViewer";
 
 export default function Home() {
   const [events, setEvents] = useState<EventType[]>([]);
   const [loadingEvents, setLoadingEvents] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [open, setOpen] = useState(true);
-  const [seasons, setSeasons] = useState<Season[]>([])
-  const [loading, setLoading] = useState(false)
-  const [selectedSeason, setSelectedSeason] = useState<Season>();
+  const [open, setOpen] = useState(false);
+  const [hotspotGroup, setHotspotGroup] = useState<string>("");
 
   useEffect(() => {
-    fetchEventsForClient({ setEvents, setLoadingEvents});
-    fetchSeasons({setSeasons, setLoading})
-    const isInIframe = window.self !== window.top;
-    if (!isInIframe) {
-      setShowModal(true);
+    if (!hotspotGroup) {
+      setEvents([]);
+      setShowModal(false);
+      setOpen(false);
+      return;
     }
-  }, []);
 
-  useEffect(() => {
-    if(!seasons) return;
-    const activeSeason = seasons.find((season)=> season.is_active === true)
-    console.log({activeSeason})
-    setSelectedSeason(activeSeason)
-  }, [seasons]);
+    const load = async () => {
+      setLoadingEvents(true);
+      await fetchEventsForClient({ setEvents, setLoadingEvents, hotspotGroup });
+      setLoadingEvents(false);
 
-  const onClose = () => setOpen(false);
+      const isInIframe = window.self !== window.top;
+      if (!isInIframe) {
+        setShowModal(true);
+        setOpen(true);
+      }
+    };
+    load();
+  }, [hotspotGroup]);
 
-  console.log({seasons})
-  console.log({selectedSeason})
-  // console.log(events)
-
-  const frameSrc = selectedSeason?.gif_url ?? null;
-
+  const onClose = () => {
+    setOpen(false);
+    setShowModal(false);
+    setHotspotGroup("");
+  };
 
   return (
     <div className="relative w-screen h-screen overflow-hidden">
+      <KrpanoHotspotViewer xml="/vtour/tour.xml" setHotspot={setHotspotGroup} />
 
-      {/* Optional seasonal frame overlay (doesn't pan/zoom) */}
-      {showModal && frameSrc && (
-        <div className="pointer-events-none absolute inset-0 z-20">
-          <SeasonOverlay show={true} frameSrc={frameSrc} />
-        </div>
-      )}
-
-      <KrpanoViewer
-        xml="/vtour/tour.xml"
-      />
-
-      {/* Events modal */}
-      {showModal && events.length > 0 && (
-        <EventModalOverlay
-          container="fullscreen"
-          open={open}
-          onClose={onClose}
-          events={events.map((e) => ({
-            ...e,
-            imageUrl: e.image_url ?? undefined,
-            title: e.title ?? "(untitled)",
-            subheading: e.subheading ?? "",
-            description: e.description ?? "",
-            dateRange: formatDateRange(e.start_date, e.end_date),
-            timeText: formatTimeRange(e.start_time, e.end_time),
-            ctaLabel: e.cta_label ?? "",
-            ctaHref: e.cta_href ?? "",
-          }))}
-          initialIndex={0}
-        />
-      )}
-
-      {/* Manual open button */}
-      <button onClick={() => setOpen(true)}>
-        <IoInformationCircleSharp className="absolute
-          top-4 left-4 bottom-auto right-auto
-          md:top-auto md:bottom-4 md:right-4 md:left-auto
-          h-12 w-12 cursor-pointer
-          text-[#B30D3B] hover:text-red-500
-          duration-300
-          z-30" />
-      </button>
+      <AnimatePresence>
+        {showModal && events.length > 0 && open && (
+          <motion.div
+            key="eventModal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
+            className="absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-sm z-50"
+          >
+            <EventModalOverlay
+              container="fullscreen"
+              open={open}
+              onClose={onClose}
+              events={events.map((e) => ({
+                ...e,
+                imageUrl: e.image_url ?? undefined,
+                title: e.title ?? "(untitled)",
+                subheading: e.subheading ?? "",
+                description: e.description ?? "",
+                dateRange: formatDateRange(e.start_date, e.end_date),
+                timeText: formatTimeRange(e.start_time, e.end_time),
+                ctaLabel: e.cta_label ?? "",
+                ctaHref: e.cta_href ?? "",
+              }))}
+              initialIndex={0}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

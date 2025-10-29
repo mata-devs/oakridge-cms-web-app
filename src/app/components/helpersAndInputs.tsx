@@ -27,6 +27,7 @@ export type EventType = {
   publish_at?: string | null;
   unpublish_at?: string | null;
   computed_status?: 'hidden' | 'scheduled' | 'expired' | 'live';
+  hotspot_group?: string;
   [key: string]: unknown;
 };
 
@@ -71,30 +72,78 @@ export const ImageDropzone: React.FC<ImageDropzoneProps> = ({
   );
 };
 
-export async function fetchEventsForClient({ setEvents, setLoadingEvents }: { setEvents: (events: EventType[]) => void; setLoadingEvents: (loading: boolean) => void; }) {
+// export async function fetchEventsForClient({ setEvents, setLoadingEvents }: { setEvents: (events: EventType[]) => void; setLoadingEvents: (loading: boolean) => void; }) {
+//   setLoadingEvents(true);
+//   try {
+//     const res = await fetch('/api/events', { cache: 'no-store' });
+//     const data = await res.json();
+//     console.log(data, 'fetched data for homepage');
+//     console.log(
+//       'ANON key fingerprint:',
+//       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.slice(0, 6),
+//       '…',
+//       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.slice(-6)
+//     );
+//     if (!res.ok) throw new Error(data?.error || 'Failed to load events');
+//     const items = (data.items || []).sort(
+//     (a: EventType, b: EventType) => (a.order ?? 0) - (b.order ?? 0)
+//   );
+//     // console.log(items, 'fetched items for homepage');
+//     setEvents(items);
+//   } catch (e) {
+//     console.error(e);
+//   } finally {
+//     setLoadingEvents(false);
+//   }
+// }
+
+export async function fetchEventsForClient({
+  setEvents,
+  setLoadingEvents,
+  hotspotGroup,
+}: {
+  setEvents: (events: EventType[]) => void;
+  setLoadingEvents: (loading: boolean) => void;
+  hotspotGroup?: string;
+}) {
   setLoadingEvents(true);
+
   try {
-    const res = await fetch('/api/events', { cache: 'no-store' });
+    const url = hotspotGroup
+      ? `/api/events?hotspot=${encodeURIComponent(hotspotGroup)}`
+      : `/api/events`;
+
+    const res = await fetch(url, { cache: 'no-store' });
     const data = await res.json();
-    console.log(data, 'fetched data for homepage');
+
+    console.log(
+      data,
+      hotspotGroup
+        ? `Fetched events for hotspot: ${hotspotGroup}`
+        : 'Fetched all events for homepage'
+    );
+
     console.log(
       'ANON key fingerprint:',
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.slice(0, 6),
       '…',
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.slice(-6)
     );
+
     if (!res.ok) throw new Error(data?.error || 'Failed to load events');
+
     const items = (data.items || []).sort(
-    (a: EventType, b: EventType) => (a.order ?? 0) - (b.order ?? 0)
-  );
-    // console.log(items, 'fetched items for homepage');
+      (a: EventType, b: EventType) => (a.order ?? 0) - (b.order ?? 0)
+    );
+
     setEvents(items);
   } catch (e) {
-    console.error(e);
+    console.error('Error fetching events:', e);
   } finally {
     setLoadingEvents(false);
   }
 }
+
 
 export async function fetchEventsForAdmin({ setEvents, setLoadingEvents }: { setEvents: (events: EventType[]) => void; setLoadingEvents: (loading: boolean) => void; }) {
   setLoadingEvents(true);

@@ -39,6 +39,7 @@ export async function PATCH(req: Request, {params}: Ctx) {
     publish_at: body.publishAt === undefined ? undefined : body.publishAt,
     unpublish_at: body.unpublishAt === undefined ? undefined : body.unpublishAt,
     order: typeof body.order === 'number' ? body.order : undefined,
+    hotspot_group: body.hotspot_group ?? undefined
   } as const;
 
   const { data, error } = await supabase

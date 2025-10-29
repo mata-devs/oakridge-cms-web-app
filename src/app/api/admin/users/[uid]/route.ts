@@ -44,7 +44,7 @@ export async function PATCH(req: Request, ctx: Ctx) {
       if (uErr) throw uErr;
     }
 
-    // ---- 2) Mirror to profiles (source of truth for UI/permissions)
+    // ---- 2) Mirror to users (source of truth for UI/permissions)
     const prof: any = {};
     if (typeof body.displayName === 'string') prof.display_name = body.displayName;
     if (nextRole) prof.role = nextRole;
@@ -53,7 +53,7 @@ export async function PATCH(req: Request, ctx: Ctx) {
     let updatedProfile = null;
     if (Object.keys(prof).length > 1) {
       const { data: p, error: pErr } = await admin()
-        .from('profiles')
+        .from('users')
         .update(prof)
         .eq('id', uid)
         .select('id, display_name, role, disabled')
@@ -89,7 +89,7 @@ export async function DELETE(_req: Request, ctx: Ctx) {
     const { uid } = await ctx.params;
     const { error } = await admin().auth.admin.deleteUser(uid);
     if (error) throw error;
-    await admin().from('profiles').delete().eq('id', uid);
+    await admin().from('users').delete().eq('id', uid);
     return NextResponse.json({ ok: true });
   } catch (e: unknown) {
     return NextResponse.json({ error: e.message || 'Server error' }, { status: 500 });

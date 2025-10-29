@@ -7,39 +7,49 @@
             onmousedown="select_hs2();"/>
     
     <action name="generate_circle_hotspots_images2" scope="local" keep="false">
-    for(set(h,0), h LT hotspot.count, inc(h),
-        if(hotspot[get(h)].style == 'hs_circle2',
+        for(set(h,0), h LT hotspot.count, inc(h);,
+            if(hotspot[get(h)].style == 'hs_circle2',
+                txtadd(hs_circle2,get(hotspot[get(h)].name),'_img2');
+                addhotspot(get(hs_circle2));
+                hotspot[get(hs_circle2)].loadstyle(hs_circle_img2);
+                copy(hotspot[get(hs_circle2)].ath,hotspot[get(h)].ath);
+                copy(hotspot[get(hs_circle2)].atv,hotspot[get(h)].atv);
+                <!-- txtadd(hotspot[get(hs_circle2)].url, '%HTMLPATH%/plugins/circular_thumbs/',get(hotspot[get(h)].name),'.png'); -->
+                set(hotspot[get(hs_circle2)].scale,0.3);
 
-            <!-- circle image hotspot -->
-            txtadd(hs_circle2,get(hotspot[get(h)].name),'_img2');
-            addhotspot(get(hs_circle2));
-            hotspot[get(hs_circle2)].loadstyle(hs_circle_img2);
-            copy(hotspot[get(hs_circle2)].ath,hotspot[get(h)].ath);
-            copy(hotspot[get(hs_circle2)].atv,hotspot[get(h)].atv);
-            txtadd(hotspot[get(hs_circle2)].url, 'vtour/plugins/circular_thumbs/',get(hotspot[get(h)].name),'.png');
-            set(hotspot[get(hs_circle2)].scale,0.3);
+                <!-- txtadd(hs_tag2,get(hotspot[get(h)].name),'_tag2');
+                addhotspot(get(hs_tag2));
+                hotspot[get(hs_tag2)].loadstyle(hs_circle_tag2);
+                copy(hotspot[get(hs_tag2)].ath,hotspot[get(h)].ath);
+                copy(hotspot[get(hs_tag2)].atv,hotspot[get(h)].atv);
+                txtadd(hotspot[get(hs_tag2)].html, '[h1]',get(hotspot[get(h)].tag),'[/h1]'); -->
+                <!-- set(hotspot[get(hs_tag2)].ox, -10) -->
+                <!-- set(hotspot[get(hs_tag2)].oy,-55); -->
 
-            <!-- info card hotspot -->
-            txtadd(hs_info, get(hotspot[get(h)].name), '_info');
-            addhotspot(get(hs_info));
-            hotspot[get(hs_info)].loadstyle(hs_info_card);
-            copy(hotspot[get(hs_info)].ath,hotspot[get(h)].ath);
-            copy(hotspot[get(hs_info)].atv,hotspot[get(h)].atv);
-            set(hotspot[get(hs_info)].ox, 170);
-            set(hotspot[get(hs_info)].oy, -170);
-            set(hotspot[get(hs_info)].alpha, 0);
-            set(hotspot[get(hs_info)].visible, true);
-            set(hotspot[get(hs_info)].zorder, 99999999);
+                txtadd(hs_info, get(hotspot[get(h)].name), '_info');
+                addhotspot(get(hs_info));
+                hotspot[get(hs_info)].loadstyle(hs_info_card);
+                copy(hotspot[get(hs_info)].ath,hotspot[get(h)].ath);
+                copy(hotspot[get(hs_info)].atv,hotspot[get(h)].atv);
+                <!-- copy(hotspot[get(hs_info)].parent, get(hs_circle2)); -->
+                <!-- set(hotspot[get(hs_info)].ox, 120) -->
+                set(hotspot[get(hs_info)].ox, 170);
+                set(hotspot[get(hs_info)].oy, -170);
+                set(hotspot[get(hs_info)].alpha, 0);
+                set(hotspot[get(hs_info)].visible, true);
+                set(hotspot[get(hs_info)].zorder, 99999999);
 
-            txtadd(cardhtml,
-                '[h1]', get(hotspot[get(h)].tag), '[/h1]',
-                '[p]', get(hotspot[get(h)].description), '[/p]'
+                txtadd(cardhtml,
+                    '[h1]', get(hotspot[get(h)].tag), '[/h1]',
+                    '[p]', get(hotspot[get(h)].description), '[/p]'
+                    );
+                    set(hotspot[get(hs_info)].html, get(cardhtml));
             );
-            set(hotspot[get(hs_info)].html, get(cardhtml));
-        );
-    );
-</action>
 
+        );
+
+
+    </action> 
 
     <!-- <action name="generate_circle_hotspots_images2" scope="local" keep="false">
         for(set(h,0), h LT hotspot.count, inc(h),
@@ -51,7 +61,7 @@
             hotspot[get(hs_circle2)].loadstyle(hs_circle_img2);
             copy(hotspot[get(hs_circle2)].ath, hotspot[get(h)].ath);
             copy(hotspot[get(hs_circle2)].atv, hotspot[get(h)].atv);
-            txtadd(hotspot[get(hs_circle2)].url, 'vtour/plugins/circular_thumbs/', get(hotspot[get(h)].name), '.png');
+            txtadd(hotspot[get(hs_circle2)].url, '%HTMLPATH%/plugins/circular_thumbs/', get(hotspot[get(h)].name), '.png');
             set(hotspot[get(hs_circle2)].scale, 0.3);
 
             /* tag label above thumb */
@@ -101,50 +111,14 @@
         onout.desktop="select_hs2(); pulse_hotspot2(get(name));"
         onloaded="pulse_hotspot2(get(name));"/> -->
 
-<action name="defaultcards">
-    set(hotspot[sm_aura2].visible,false);
-    set(hotspot[high_street_south2].visible,false);
-    set(hotspot[bgc_ac2].visible,false);
-    set(hotspot[global_city_pol_station2].visible,false);
-    set(hotspot[boni_hight_street2].visible,false);
-    set(hotspot[terra282].visible,false);
-    set(hotspot[track302].visible,false);
-    set(hotspot[mind_museum2].visible,false);
-    set(hotspot[lukes_hospital2].visible,false);
-    set(hotspot[conv_store_12].visible,false);
-    set(hotspot[conv_store_22].visible,false);
-    set(hotspot[mitsukoshi_mall2].visible,false);
-    set(hotspot[palace_manila2].visible,false);
-    set(hotspot[uptown_mall2].visible,false);
-    set(hotspot[market_market2].visible,false);
-</action>
-<!-- I remove this
-  show_info_card(get(name));    
-       onout.desktop="hide_info_card(get(name));trythistwo(get(name));" -->
     <style name="hs_circle2" 
        type="image"
        url="hs_circle.png"
        scale="0.1"
        flying="0.03"
-       onover="defaultcardsshown();defaultcards();select_hs2(get(name));trythisone(get(name));set(hotspot[get(hotspot[get(name)].baw)].visible,true);"
-       onout.desktop="hide_info_card(get(name));trythistwo(get(name));" 
-       onclick2="hide_info_card(get(name));trythistwo(get(name));set(enabled,true);"
-        onclick="if(name != @selected_hs2,
-                    select_hs2(get(name));
-                    defaultcards();
-                    set(hotspot[get(hotspot[get(name)].baw)].visible,true);
-                    looktohotspot(get(name),get(view.fov));
-                    
-                    ,
-                    set(enabled,false);
-                    select_hs2();
-                    defaultcards();
-                    onclick2());
-                    "
-        onclick.desktop="
-                    set(enabled,false);
-                    onclick2();"
-       onloaded="pulse_hotspot2(get(name)); "/>
+       onover="select_hs2(get(name));"
+       onout ="hide_info_card(get(name));"
+       onloaded="pulse_hotspot2(get(name));"/>
 
 
     <!-- <style name="hs_circle2" 
@@ -195,182 +169,6 @@
             h1{font-family:Helvetica,Arial; font-size:20px; font-weight:bold; color:#BC0F42; margin:0 0 6px 0; text-align:center;}
             p{font-family:Helvetica,Arial; font-size:16px; color:#333; line-height:1.1;  margin:0; max-width:260px; max-height:260px; flow-wrap: break-word; text-align: left;}
        "/>
-
-       <action name="trythisone" args="hsname">
-        set(var_name, get(name));
-    if(var_name == sm_aura,
-        set(hotspot[sm].visible, false);
-    );
-    if(var_name == terra28,
-        set(hotspot[terra280].visible, false);
-    );
-    if(var_name == track30,
-        set(hotspot[track300].visible, false);
-    );
-    if(var_name == high_street_south,
-        set(hotspot[highstreet].visible, false);
-    );
-    if(var_name == bgc_ac,
-        set(hotspot[bgc].visible, false);
-    );
-    if(var_name == global_city_pol_station,
-        set(hotspot[global].visible, false);
-    );
-    if(var_name == boni_hight_street,
-        set(hotspot[bonifacio].visible, false);
-    );
-    if(var_name == mind_museum,
-        set(hotspot[mind].visible, false);
-    );
-    if(var_name == lukes_hospital,
-        set(hotspot[luke].visible, false);
-    );
-    if(var_name == conv_store_1,
-        set(hotspot[convenience2].visible, false);
-    );
-    if(var_name == conv_store_2,
-        set(hotspot[convenience1].visible, false);
-    );
-    if(var_name == mitsukoshi_mall,
-        set(hotspot[mitsoki].visible, false);
-    );
-    if(var_name == palace_manila,
-        set(hotspot[palace].visible, false);
-    );
-    if(var_name == uptown_mall,
-        set(hotspot[uptown].visible, false);
-    );
-    if(var_name == market_market,
-        set(hotspot[market].visible, false);
-    );
-       </action>
-       <action name="defaultcardsshown">
-        if(hotspot[sm_aura].visible == true,
-            set(hotspot[sm].visible, true);
-            ,
-            set(hotspot[sm].visible, false);
-        );
-        if(hotspot[terra28].visible == true,
-            set(hotspot[terra280].visible, true);
-            ,
-            set(hotspot[terra280].visible, false);
-        );
-        if(hotspot[track30].visible == true,
-            set(hotspot[track300].visible, true);
-            ,
-            set(hotspot[track300].visible, false);
-        );
-        if(hotspot[bgc_ac].visible == true,
-            set(hotspot[bgc].visible, true);
-            ,
-            set(hotspot[bgc].visible, false);
-        );
-        if(hotspot[high_street_south].visible == true,
-            set(hotspot[highstreet].visible, true);
-            ,
-            set(hotspot[highstreet].visible, false);
-        );
-        if(hotspot[global_city_pol_station].visible == true,
-            set(hotspot[global].visible, true);
-            ,
-            set(hotspot[global].visible, false);
-        );
-        if(hotspot[boni_hight_street].visible == true,
-            set(hotspot[bonifacio].visible, true);
-            ,
-            set(hotspot[bonifacio].visible, false);
-        );
-        if(hotspot[mind_museum].visible == true,
-            set(hotspot[mind].visible, true);
-            ,
-            set(hotspot[mind].visible, false);
-        );
-        if(hotspot[lukes_hospital].visible == true,
-            set(hotspot[luke].visible, true);
-            ,
-            set(hotspot[luke].visible, false);
-        );
-        if(hotspot[conv_store_2].visible == true,
-            set(hotspot[convenience2].visible, true);
-            ,
-            set(hotspot[convenience2].visible, false);
-        );
-        if(hotspot[conv_store_1].visible == true,
-            set(hotspot[convenience1].visible, true);
-            ,
-            set(hotspot[convenience1].visible, false);
-        );
-        if(hotspot[mitsukoshi_mall].visible == true,
-            set(hotspot[mitsoki].visible, true);
-            ,
-            set(hotspot[mitsoki].visible, false);
-        );
-        if(hotspot[palace_manila].visible == true,
-            set(hotspot[palace].visible, true);
-            ,
-            set(hotspot[palace].visible, false);
-        );
-        if(hotspot[uptown_mall].visible == true,
-            set(hotspot[uptown].visible, true);
-            ,
-            set(hotspot[uptown].visible, false);
-        );
-        if(hotspot[market_market].visible == true,
-            set(hotspot[market].visible, true);
-            ,
-            set(hotspot[market].visible, false);
-        );
-
-
-       </action>
-       <action name="trythistwo" args="hsname">
-        set(var_name, %1);
-     if(var_name == sm_aura,
-        set(hotspot[sm].visible, true);
-    );
-    if(var_name == terra28,
-        set(hotspot[terra280].visible, true);
-    );
-    if(var_name == track30,
-        set(hotspot[track300].visible, true);
-    );
-    if(var_name == high_street_south,
-        set(hotspot[highstreet].visible, true);
-    );
-    if(var_name == bgc_ac,
-        set(hotspot[bgc].visible, true);
-    );
-    if(var_name == global_city_pol_station,
-        set(hotspot[global].visible, true);
-    );
-    if(var_name == boni_hight_street,
-        set(hotspot[bonifacio].visible, true);
-    );
-    if(var_name == mind_museum,
-        set(hotspot[mind].visible, true);
-    );
-    if(var_name == lukes_hospital,
-        set(hotspot[luke].visible, true);
-    );
-    if(var_name == conv_store_1,
-        set(hotspot[convenience2].visible, true);
-    );
-    if(var_name == conv_store_2,
-        set(hotspot[convenience1].visible, true);
-    );
-    if(var_name == mitsukoshi_mall,
-        set(hotspot[mitsoki].visible, true);
-    );
-    if(var_name == palace_manila,
-        set(hotspot[palace].visible, true);
-    );
-    if(var_name == uptown_mall,
-        set(hotspot[uptown].visible, true);
-    );
-    if(var_name == market_market,
-        set(hotspot[market].visible, true);
-    );
-       </action>
 
 
     <style name="hs_circle_img2" 
@@ -436,7 +234,9 @@
     </action>
 
     <action name="hs_anim_on2">
-
+        txtadd(hs_tag2,%1,'_tag2');
+        tween(hotspot[get(hs_tag2)].alpha,0,0.3);
+        set(hotspot[get(hs_tag2)].zorder, 999999);
         set(hotspot[%1].zorder, 999999);
         tween(hotspot[%1].scale,1,0.3,easeoutcubic);
         tween(hotspot[%1].alpha,0,0.3,easeoutcubic);
@@ -466,6 +266,9 @@
         pulse_hotspot2(%1);
     </action>
      <action name="pulse_hotspot2">
+        txtadd(hs_tag2,%1,'_tag2');
+        tween(hotspot[get(hs_tag2)].alpha,1,0.3);
+        set(hotspot[get(hs_tag2)].zorder, 999999);
         tween(hotspot[%1].scale, 0.60, 0.6, easeinoutquad,
             tween(hotspot[%1].scale, 0.5, 0.6, easeinoutquad,
                 pulse_hotspot2(%1)

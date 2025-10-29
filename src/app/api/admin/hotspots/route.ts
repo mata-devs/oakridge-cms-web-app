@@ -1,35 +1,52 @@
 import { NextResponse } from 'next/server';
 import { createSupabaseServer } from '../../../../../lib/supabase/server';
 
-export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export async function GET() {
+  const supabase = await createSupabaseServer();
+  const { data, error } = await supabase.from('hotspots').select('*').order('created_at', { ascending: false });
 
-export async function GET(req: Request) {
-  try {
-    const supabase = await createSupabaseServer();
-    const { data: auth } = await supabase.auth.getUser();
-    if (!auth?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json(data);
+}
 
-    const role = (auth.user.app_metadata as { role?: string } | null)?.role ?? 'user';
-    if (!['admin', 'editor', 'super-admin'].includes(role)) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
+export async function POST(req: Request) {
+  const supabase = await createSupabaseServer();
+  const { name, title } = await req.json();
 
-    const url = new URL(req.url);
-    const scene = url.searchParams.get('scene') || null;
+  if (!name || !title)
+    return NextResponse.json({ error: 'Name and title are required' }, { status: 400 });
 
-    let q = supabase
-      .from('hotspots')
-      .select('id,name,description,image_url,level,order,startdate,enddate,starttime,endtime,title,cta_label,cta_href,created_at,updated_at')
-      .order('order', { ascending:  true });
+  const { data, error } = await supabase.from('hotspots').insert({ name, title }).select().single();
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-    if (scene) q = q.eq('scene', scene);
+  return NextResponse.json(data);
+}
 
-    const { data, error } = await q;
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    return NextResponse.json({ items: data ?? [] });
-  } catch (e: unknown) {
-    return NextResponse.json({ error: e instanceof Error ? e.message : 'Server error' }, { status: 500 });
-  }
+export async function PUT(req: Request) {
+  const supabase = await createSupabaseServer();
+  const { id, name, title } = await req.json();
+
+  if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
+
+  const { data, error } = await supabase
+    .from('hotspots')
+    .update({ name, title })
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json(data);
+}
+
+export async function DELETE(req: Request) {
+  const supabase = await createSupabaseServer();
+  const { id } = await req.json();
+
+  if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
+
+  const { error } = await supabase.from('hotspots').delete().eq('id', id);
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  return NextResponse.json({ success: true });
 }

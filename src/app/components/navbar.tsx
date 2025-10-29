@@ -3,14 +3,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import grandhyattmodel from '../assets/grandhyatt.png';
-import { useRouter, usePathname } from 'next/navigation';
+import oakridge from '../assets/oakridge2.png';
+import { usePathname } from 'next/navigation';
 import { supabase } from '../../../lib/supabase/client';
 
 type Role = 'admin' | 'editor' | 'super-admin';
 
 export default function NavBar({ role = 'editor' }: { role?: Role }) {
-  const r = useRouter();
+  // const r = useRouter();
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -67,8 +67,11 @@ export default function NavBar({ role = 'editor' }: { role?: Role }) {
     >
       <div className="mx-auto  px-4 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <Image src={grandhyattmodel} alt="Grand Hyatt" priority width={100} />
+          <Image src={oakridge} alt="Oakridge" priority width={100} />
         </Link>
+          {/* <span className='tracking-wide w-full'>
+            OAKRIDGE
+          </span> */}
 
         {/* Desktop ni */}
         <ul className="hidden md:flex items-center gap-4 font-[family-name:var(--font-geist-sans)]">
@@ -80,22 +83,22 @@ export default function NavBar({ role = 'editor' }: { role?: Role }) {
               Pop-up Content
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
-              href="/admin/grandhyatt"
+              href="/admin/content"
               className="rounded-md border-2 border-transparent px-3 py-2 hover:border-blue-500 transition"
             >
-              Grand Hyatt Content
+              Oakridge Content
             </Link>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <Link
               href="/admin/seasons"
               className="rounded-md border-2 border-transparent px-3 py-2 hover:border-blue-500 transition"
             >
               Seasons
             </Link>
-          </li>
+          </li> */}
           {isRoleSuperAdminOrAdmin && (
             <li>
               <Link 

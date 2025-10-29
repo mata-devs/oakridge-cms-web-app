@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     const supa = adminClient();
 
     const { count, error: countErr } = await supa
-      .from('profiles')
+      .from('users')
       .select('id', { count: 'exact', head: true });
     if (countErr) throw countErr;
 
@@ -39,8 +39,9 @@ export async function POST(req: Request) {
     if (error) throw error;
 
     const user = data.user!;
-    const { error: pe } = await supa.from('profiles').insert({
+    const { error: pe } = await supa.from('users').insert({
       id: user.id,
+      email: user.email,
       display_name: name,
       role: 'super-admin',
       disabled: false,

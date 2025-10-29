@@ -8,9 +8,9 @@ export async function POST(req: Request) {
   try {
     const { email, password, name, role = 'editor', disabled = false } = await req.json();
 
-    // Bootstrap: if no profiles, this becomes admin
+    // Bootstrap: if no users, this becomes admin
     const admin = supa();
-    const { data: pc, error: pe } = await admin.from('profiles').select('id', { count: 'exact', head: true });
+    const { data: pc, error: pe } = await admin.from('users').select('id', { count: 'exact', head: true });
     if (pe) throw pe;
     const isBootstrap = (pc as unknown)?.count === 0;
 
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     if (error) throw error;
 
     // create profile row
-    await admin.from('profiles').upsert({
+    await admin.from('users').upsert({
       id: data.user!.id,
       display_name: name,
       role: isBootstrap ? 'admin' : String(role).toLowerCase(),

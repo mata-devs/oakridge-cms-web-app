@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import grandhyatt from '../assets/grandhyatt.png';
+import oakridge from '../assets/oakridge.png';
 import { supabase } from '../../../lib/supabase/client';
 
 export default function Login() {
@@ -37,8 +37,8 @@ export default function Login() {
   }
   return (
     <main className="p-6 bg-[#151c2f] min-h-screen w-full flex flex-col items-center justify-center">
-      <div>
-        <Image src={grandhyatt} alt="Grand Hyatt" placeholder="blur" width={300} />
+      <div className='pb-8 scale-80 md:scale-100'>
+        <Image src={oakridge} alt="Grand Hyatt" placeholder="blur" width={300} />
       </div>
 
       <div className="shadow-xl w-[80%] md:w-[30%] lg:w-[35%] xl:w-[25%] bg-[#212e3f] p-4 md:p-8 rounded-xl">

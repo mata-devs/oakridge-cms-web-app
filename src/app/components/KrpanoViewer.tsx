@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Script from "next/script";
 import { fetchHotspots, Hotspots } from "./helpersAndInputs";
-import HotspotModalOverlay from "../admin/grandhyatt/HotspotModal";
+import HotspotModalOverlay from "../admin/content/HotspotModal";
 import { usePathname } from "next/navigation";
+import EventModalOverlay from "./EventModalOverlay";
 
 /** Minimal krpano API we use */
 interface Krpano {

@@ -20,6 +20,9 @@ import { LabeledDate, LabeledInput, LabeledTextarea,
   toUtcIso, applyFilter, toLocalInputValue} from './helpersAndInputs';
 import { StatusPill } from './statusPill';
 import { ArrowBackOutlined } from '@mui/icons-material';
+import MainHotspotModal from './MainHotspotModal';
+import { useUser } from '../providers/UserProviders';
+import HotspotSelect from './HotspotSelectComponent';
 
 export default function CMSPage() {
   const [mounted, setMounted] = useState(false);
@@ -28,6 +31,9 @@ export default function CMSPage() {
   const [description, setDescription] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const {profile} = useUser();
+  const [hotspotGroup, setHotspotGroup] = useState<string>('');
+
 
   // Schedule/time
   const [startDate, setStartDate] = useState('');
@@ -65,6 +71,7 @@ export default function CMSPage() {
     image_url: '',
     image_path: '',
     order: 0,
+    hotspot_group: '',
   });
   const [hasOrderChanges, setHasOrderChanges] = useState(false);
 
@@ -78,6 +85,8 @@ export default function CMSPage() {
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const [filterTab, setFilterTab] = useState(0);
   const [disableDrag, setDisableDrag] = useState(false);
+  const [openHotspotModal, setOpenHotspotModal] = useState(false);
+
 
   const DRAFT_KEY = 'cmsDraft_v1';
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -209,6 +218,7 @@ export default function CMSPage() {
     setPublished(false);
     setPublishAt('');
     setUnpublishAt('');
+    setHotspotGroup('');
   }
 
   function clearForm() {
@@ -220,6 +230,7 @@ export default function CMSPage() {
     setPublished(false);
     setPublishAt('');
     setUnpublishAt('');
+    setHotspotGroup('');
   }
 
   function onDragEnd(result: DropResult) {
@@ -322,6 +333,7 @@ export default function CMSPage() {
         published,
         publishAt:toUtcIso(publishAt) || null,
         unpublishAt: toUtcIso(unpublishAt) || null,
+        hotspot_group: hotspotGroup,
       };
 
       let res, data;
@@ -389,6 +401,7 @@ export default function CMSPage() {
   }
 
   console.log(selectedEvent)
+  console.log({hotspotGroup})
 
   async function onDelete(id: string) {
     setPendingDeleteId(id); 
@@ -444,6 +457,7 @@ export default function CMSPage() {
     timeText: formatTimeRange(e.start_time, e.end_time),
     ctaLabel: e.cta_label ?? '',
     ctaHref: e.cta_href ?? '',
+    hotspotGroup: e.hotspot_group ?? '',
   }));
 
   const formEvent = {
@@ -456,6 +470,7 @@ export default function CMSPage() {
     timeText: formatTimeRange(startTime, endTime),
     ctaLabel: ctaLabel || '',
     ctaHref: ctaHref || '',
+    hotspotGroup: hotspotGroup || '',
   };
 
   const hasFormContent =
@@ -465,7 +480,8 @@ export default function CMSPage() {
     !!startDate || !!endDate || !!startTime || !!endTime ||
     (ctaLabel?.trim()?.length ?? 0) > 0 ||
     (ctaHref?.trim()?.length ?? 0) > 0 ||
-    !!imageUrl;
+    !!imageUrl || !!hotspotGroup;
+
 
   const previewEvents =
     tab === 0
@@ -489,10 +505,24 @@ export default function CMSPage() {
   if (!mounted) return null;
   return (
     <div className="font-sans flex flex-col gap-4 md:flex-row min-h-screen md:h-screen p-8 md:gap-8 sm:px-20 bg-[#151c2f]">
+
       {/* editor side ni */}
       <div className="md:w-[30%] text-white h-[90%] md:overflow-scroll custom-scrollbar shadow-xl rounded-xl bg-[#212e3f] p-3 md:p-5 space-y-4">
         {/* tabs header */}
         <Box sx={{ borderBottom: 1, borderColor: 'rgba(255,255,255,0.1)' }}>
+          {
+            profile?.role === 'super-admin' && (
+              <div className='flex items-center py-2'>
+                <button
+                  onClick={()=> setOpenHotspotModal(true)}
+                  className='bg-green-500 z-50 px-3 rounded-lg py-1 cursor-pointer hover:bg-green-700 duration-300 transition-all'
+                >
+                  Hotspot
+                </button>
+                <MainHotspotModal open={openHotspotModal} onClose={()=> setOpenHotspotModal(false)}/>
+              </div>
+            )
+          }
           <Tabs
             value={tab}
             onChange={(_, v) => {
@@ -626,6 +656,7 @@ export default function CMSPage() {
                                       setPublished(!!ev.published);
                                       setPublishAt(toLocalInputValue(ev.publish_at) || '');
                                       setUnpublishAt(toLocalInputValue(ev.unpublish_at) || '');
+                                      setHotspotGroup(ev.hotspot_group || '');
                                     }
                                     // console.log(e)
                                   }}
@@ -653,6 +684,7 @@ export default function CMSPage() {
                                         setPublished(ev.published ?? false);
                                         setPublishAt(toLocalInputValue(ev.publish_at) || '');
                                         setUnpublishAt(toLocalInputValue(ev.unpublish_at) || '');
+                                        setHotspotGroup(ev.hotspot_group || '');
                                       }
                                     }
                                   }>
@@ -766,6 +798,10 @@ export default function CMSPage() {
               onDragOver={onDragOver}
               inputRef={inputRef}
             />
+            <div className='space-y-1 mt-2 pt-2'>
+              <HotspotSelect value={hotspotGroup} onChange={setHotspotGroup} />
+            </div>
+
             <div className="space-y-1 mt-2">
               <LabeledInput label="Title" value={title} onChange={setTitle} placeholder="Enter title" />
               <LabeledInput label="Subheading" value={subheading} onChange={setSubheading} placeholder="Optional subheading" />
