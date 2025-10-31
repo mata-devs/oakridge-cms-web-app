@@ -7,49 +7,39 @@
             onmousedown="select_hs2();"/>
     
     <action name="generate_circle_hotspots_images2" scope="local" keep="false">
-        for(set(h,0), h LT hotspot.count, inc(h);,
-            if(hotspot[get(h)].style == 'hs_circle2',
-                txtadd(hs_circle2,get(hotspot[get(h)].name),'_img2');
-                addhotspot(get(hs_circle2));
-                hotspot[get(hs_circle2)].loadstyle(hs_circle_img2);
-                copy(hotspot[get(hs_circle2)].ath,hotspot[get(h)].ath);
-                copy(hotspot[get(hs_circle2)].atv,hotspot[get(h)].atv);
-                <!-- txtadd(hotspot[get(hs_circle2)].url, '%HTMLPATH%/plugins/circular_thumbs/',get(hotspot[get(h)].name),'.png'); -->
-                set(hotspot[get(hs_circle2)].scale,0.3);
+    for(set(h,0), h LT hotspot.count, inc(h),
+        if(hotspot[get(h)].style == 'hs_circle2',
 
-                <!-- txtadd(hs_tag2,get(hotspot[get(h)].name),'_tag2');
-                addhotspot(get(hs_tag2));
-                hotspot[get(hs_tag2)].loadstyle(hs_circle_tag2);
-                copy(hotspot[get(hs_tag2)].ath,hotspot[get(h)].ath);
-                copy(hotspot[get(hs_tag2)].atv,hotspot[get(h)].atv);
-                txtadd(hotspot[get(hs_tag2)].html, '[h1]',get(hotspot[get(h)].tag),'[/h1]'); -->
-                <!-- set(hotspot[get(hs_tag2)].ox, -10) -->
-                <!-- set(hotspot[get(hs_tag2)].oy,-55); -->
+            <!-- circle image hotspot -->
+            txtadd(hs_circle2,get(hotspot[get(h)].name),'_img2');
+            addhotspot(get(hs_circle2));
+            hotspot[get(hs_circle2)].loadstyle(hs_circle_img2);
+            copy(hotspot[get(hs_circle2)].ath,hotspot[get(h)].ath);
+            copy(hotspot[get(hs_circle2)].atv,hotspot[get(h)].atv);
+            txtadd(hotspot[get(hs_circle2)].url, 'vtour/plugins/circular_thumbs/',get(hotspot[get(h)].name),'.png');
+            set(hotspot[get(hs_circle2)].scale,0.3);
 
-                txtadd(hs_info, get(hotspot[get(h)].name), '_info');
-                addhotspot(get(hs_info));
-                hotspot[get(hs_info)].loadstyle(hs_info_card);
-                copy(hotspot[get(hs_info)].ath,hotspot[get(h)].ath);
-                copy(hotspot[get(hs_info)].atv,hotspot[get(h)].atv);
-                <!-- copy(hotspot[get(hs_info)].parent, get(hs_circle2)); -->
-                <!-- set(hotspot[get(hs_info)].ox, 120) -->
-                set(hotspot[get(hs_info)].ox, 170);
-                set(hotspot[get(hs_info)].oy, -170);
-                set(hotspot[get(hs_info)].alpha, 0);
-                set(hotspot[get(hs_info)].visible, true);
-                set(hotspot[get(hs_info)].zorder, 99999999);
+            <!-- info card hotspot -->
+            txtadd(hs_info, get(hotspot[get(h)].name), '_info');
+            addhotspot(get(hs_info));
+            hotspot[get(hs_info)].loadstyle(hs_info_card);
+            copy(hotspot[get(hs_info)].ath,hotspot[get(h)].ath);
+            copy(hotspot[get(hs_info)].atv,hotspot[get(h)].atv);
+            set(hotspot[get(hs_info)].ox, 170);
+            set(hotspot[get(hs_info)].oy, -170);
+            set(hotspot[get(hs_info)].alpha, 0);
+            set(hotspot[get(hs_info)].visible, true);
+            set(hotspot[get(hs_info)].zorder, 99999999);
 
-                txtadd(cardhtml,
-                    '[h1]', get(hotspot[get(h)].tag), '[/h1]',
-                    '[p]', get(hotspot[get(h)].description), '[/p]'
-                    );
-                    set(hotspot[get(hs_info)].html, get(cardhtml));
+            txtadd(cardhtml,
+                '[h1]', get(hotspot[get(h)].tag), '[/h1]',
+                '[p]', get(hotspot[get(h)].description), '[/p]'
             );
-
+            set(hotspot[get(hs_info)].html, get(cardhtml));
         );
+    );
+</action>
 
-
-    </action> 
 
     <!-- <action name="generate_circle_hotspots_images2" scope="local" keep="false">
         for(set(h,0), h LT hotspot.count, inc(h),
@@ -61,7 +51,7 @@
             hotspot[get(hs_circle2)].loadstyle(hs_circle_img2);
             copy(hotspot[get(hs_circle2)].ath, hotspot[get(h)].ath);
             copy(hotspot[get(hs_circle2)].atv, hotspot[get(h)].atv);
-            txtadd(hotspot[get(hs_circle2)].url, '%HTMLPATH%/plugins/circular_thumbs/', get(hotspot[get(h)].name), '.png');
+            txtadd(hotspot[get(hs_circle2)].url, 'vtour/plugins/circular_thumbs/', get(hotspot[get(h)].name), '.png');
             set(hotspot[get(hs_circle2)].scale, 0.3);
 
             /* tag label above thumb */
@@ -111,14 +101,51 @@
         onout.desktop="select_hs2(); pulse_hotspot2(get(name));"
         onloaded="pulse_hotspot2(get(name));"/> -->
 
+<action name="defaultcards">
+    set(hotspot[sm_aura2].visible,false);
+    set(hotspot[high_street_south2].visible,false);
+    set(hotspot[bgc_ac2].visible,false);
+    set(hotspot[global_city_pol_station2].visible,false);
+    set(hotspot[boni_hight_street2].visible,false);
+    set(hotspot[terra282].visible,false);
+    set(hotspot[track302].visible,false);
+    set(hotspot[mind_museum2].visible,false);
+    set(hotspot[lukes_hospital2].visible,false);
+    set(hotspot[conv_store_12].visible,false);
+    set(hotspot[conv_store_22].visible,false);
+    set(hotspot[mitsukoshi_mall2].visible,false);
+    set(hotspot[palace_manila2].visible,false);
+    set(hotspot[uptown_mall2].visible,false);
+    set(hotspot[market_market2].visible,false);
+</action>
+<!-- I remove this
+  show_info_card(get(name));    
+       onout.desktop="hide_info_card(get(name));trythistwo(get(name));" -->
+       <!-- onover="defaultcardsshown();defaultcards();select_hs2(get(name));trythisone(get(name));set(hotspot[get(hotspot[get(name)].baw)].visible,true);"
+       onout.desktop="hide_info_card(get(name));trythistwo(get(name));"  -->
     <style name="hs_circle2" 
        type="image"
        url="hs_circle.png"
        scale="0.1"
        flying="0.03"
-       onover="select_hs2(get(name));"
-       onout ="hide_info_card(get(name));"
-       onloaded="pulse_hotspot2(get(name));"/>
+       
+       onclick2="hide_info_card(get(name));trythistwo(get(name));set(enabled,true);"
+        onclick="if(name != @selected_hs2,
+                    select_hs2(get(name));
+                    defaultcards();
+                    set(hotspot[get(hotspot[get(name)].baw)].visible,true);
+                    looktohotspot(get(name),get(view.fov));
+                    
+                    ,
+                    set(enabled,false);
+                    select_hs2();
+                    defaultcards();
+                    onclick2());
+                    "
+        onclick.desktop="
+                    set(enabled,false);
+                    onclick2();"
+       onloaded="pulse_hotspot2(get(name)); "/>
 
 
     <!-- <style name="hs_circle2" 
@@ -170,6 +197,7 @@
             p{font-family:Helvetica,Arial; font-size:16px; color:#333; line-height:1.1;  margin:0; max-width:260px; max-height:260px; flow-wrap: break-word; text-align: left;}
        "/>
 
+       
 
     <style name="hs_circle_img2" 
         type="image"
@@ -234,9 +262,7 @@
     </action>
 
     <action name="hs_anim_on2">
-        txtadd(hs_tag2,%1,'_tag2');
-        tween(hotspot[get(hs_tag2)].alpha,0,0.3);
-        set(hotspot[get(hs_tag2)].zorder, 999999);
+
         set(hotspot[%1].zorder, 999999);
         tween(hotspot[%1].scale,1,0.3,easeoutcubic);
         tween(hotspot[%1].alpha,0,0.3,easeoutcubic);
@@ -266,9 +292,6 @@
         pulse_hotspot2(%1);
     </action>
      <action name="pulse_hotspot2">
-        txtadd(hs_tag2,%1,'_tag2');
-        tween(hotspot[get(hs_tag2)].alpha,1,0.3);
-        set(hotspot[get(hs_tag2)].zorder, 999999);
         tween(hotspot[%1].scale, 0.60, 0.6, easeinoutquad,
             tween(hotspot[%1].scale, 0.5, 0.6, easeinoutquad,
                 pulse_hotspot2(%1)

@@ -1,0 +1,349 @@
+    <krpano>
+    
+    <events name="hs_circle_events2" keep="true" 
+            onnewscene="add_layers_hs_deselect_on_ondown_event2();
+                        generate_circle_hotspots_images2();
+                        set(events[hs_circle_events2].onnewscene, generate_circle_hotspots_images2(););"
+            onmousedown="select_hs2();"/>
+    
+    <action name="generate_circle_hotspots_images2" scope="local" keep="false">
+        for(set(h,0), h LT hotspot.count, inc(h);,
+            if(hotspot[get(h)].style == 'hs_circle2',
+                txtadd(hs_circle2,get(hotspot[get(h)].name),'_img2');
+                addhotspot(get(hs_circle2));
+                hotspot[get(hs_circle2)].loadstyle(hs_circle_img2);
+                copy(hotspot[get(hs_circle2)].ath,hotspot[get(h)].ath);
+                copy(hotspot[get(hs_circle2)].atv,hotspot[get(h)].atv);
+                <!-- txtadd(hotspot[get(hs_circle2)].url, '%HTMLPATH%/plugins/circular_thumbs/',get(hotspot[get(h)].name),'.png'); -->
+                set(hotspot[get(hs_circle2)].scale,0.3);
+
+                <!-- txtadd(hs_tag2,get(hotspot[get(h)].name),'_tag2');
+                addhotspot(get(hs_tag2));
+                hotspot[get(hs_tag2)].loadstyle(hs_circle_tag2);
+                copy(hotspot[get(hs_tag2)].ath,hotspot[get(h)].ath);
+                copy(hotspot[get(hs_tag2)].atv,hotspot[get(h)].atv);
+                txtadd(hotspot[get(hs_tag2)].html, '[h1]',get(hotspot[get(h)].tag),'[/h1]'); -->
+                <!-- set(hotspot[get(hs_tag2)].ox, -10) -->
+                <!-- set(hotspot[get(hs_tag2)].oy,-55); -->
+
+                txtadd(hs_info, get(hotspot[get(h)].name), '_info');
+                addhotspot(get(hs_info));
+                hotspot[get(hs_info)].loadstyle(hs_info_card);
+                copy(hotspot[get(hs_info)].ath,hotspot[get(h)].ath);
+                copy(hotspot[get(hs_info)].atv,hotspot[get(h)].atv);
+                <!-- copy(hotspot[get(hs_info)].parent, get(hs_circle2)); -->
+                <!-- set(hotspot[get(hs_info)].ox, 120) -->
+                set(hotspot[get(hs_info)].ox, 170);
+                set(hotspot[get(hs_info)].oy, -170);
+                set(hotspot[get(hs_info)].alpha, 0);
+                set(hotspot[get(hs_info)].visible, true);
+                set(hotspot[get(hs_info)].zorder, 99999999);
+
+                txtadd(cardhtml,
+                    '[h1]', get(hotspot[get(h)].tag), '[/h1]',
+                    '[p]', get(hotspot[get(h)].description), '[/p]'
+                    );
+                    set(hotspot[get(hs_info)].html, get(cardhtml));
+            );
+
+        );
+
+
+    </action> 
+
+    <!-- <action name="generate_circle_hotspots_images2" scope="local" keep="false">
+        for(set(h,0), h LT hotspot.count, inc(h),
+            if(hotspot[get(h)].style == 'hs_circle2',
+
+            /* thumbnail */
+            txtadd(hs_circle2, get(hotspot[get(h)].name), '_img2');
+            addhotspot(get(hs_circle2));
+            hotspot[get(hs_circle2)].loadstyle(hs_circle_img2);
+            copy(hotspot[get(hs_circle2)].ath, hotspot[get(h)].ath);
+            copy(hotspot[get(hs_circle2)].atv, hotspot[get(h)].atv);
+            txtadd(hotspot[get(hs_circle2)].url, '%HTMLPATH%/plugins/circular_thumbs/', get(hotspot[get(h)].name), '.png');
+            set(hotspot[get(hs_circle2)].scale, 0.3);
+
+            /* tag label above thumb */
+            txtadd(hs_tag2, get(hotspot[get(h)].name), '_tag2');
+            addhotspot(get(hs_tag2));
+            hotspot[get(hs_tag2)].loadstyle(hs_circle_tag2);
+            copy(hotspot[get(hs_tag2)].parent, get(hs_circle2));  
+            set(hotspot[get(hs_tag2)].ox, 0);
+            set(hotspot[get(hs_tag2)].oy, -40);
+            txtadd(hotspot[get(hs_tag2)].html, '[h1]', get(hotspot[get(h)].tag), '[/h1]');
+
+            /* info card (title + description) above tag */
+            txtadd(hs_info, get(hotspot[get(h)].name), '_info');
+            addhotspot(get(hs_info));
+            hotspot[get(hs_info)].loadstyle(hs_info_card);
+            copy(hotspot[get(hs_info)].parent, get(hs_circle2));  
+            set(hotspot[get(hs_info)].ox, 0);
+            set(hotspot[get(hs_info)].oy, -110);                   
+            set(hotspot[get(hs_info)].alpha, 0);
+            set(hotspot[get(hs_info)].visible, true);
+
+            /* build HTML using real tags + classes */
+            txtadd(cardhtml,
+                '[h1]', get(hotspot[get(h)].tag), '[/h1]',
+                get(hotspot[get(h)].description)
+                );
+                set(hotspot[get(hs_info)].html, get(cardhtml));
+
+
+            );
+        );
+    </action> -->
+
+
+    <action name="add_layers_hs_deselect_on_ondown_event2" scope="local">
+        for(set(l,0), l LT layer.count, inc(l);,
+            txtadd(layer[get(l)].ondown, get(layer[get(l)].ondown), ' select_hs2();'););
+    </action>
+
+    <!-- <style name="hs_circle2" 
+        type="image"
+        url="hs_circle.png"
+        scale="0.1"
+        flying="0.03"
+        onover="select_hs2(get(name)); show_info_card(get(name));"
+        onout="hide_info_card(get(name));"
+        onout.desktop="select_hs2(); pulse_hotspot2(get(name));"
+        onloaded="pulse_hotspot2(get(name));"/> -->
+
+    <style name="hs_circle2" 
+       type="image"
+       url="hs_circle.png"
+       scale="0.1"
+       flying="0.03"
+       onover="select_hs2(get(name));"
+       onout ="hide_info_card(get(name));"
+       onloaded="pulse_hotspot2(get(name));"/>
+
+
+    <!-- <style name="hs_circle2" 
+       type="image"
+       url="hs_circle.png"
+       scale="0.5"
+       flying="0.03"
+       onover="hs_anim_on2(get(name)); hide_other_hotspots(get(name));"
+       onout="show_all_hotspots(); hs_anim_off2(get(name));"
+       onloaded="pulse_hotspot2(get(name));"/> -->
+
+    <!-- <style name="hs_info_card"
+       type="text"
+       alpha="0"
+       zorder="999999"
+       bg="true"
+       bgalpha="1.0"
+       bgcolor="0xffffff"
+       border="true"
+       bordercolor="0xcccccc"
+       borderalpha="1.0"
+       borderwidth="1.0"
+       bgroundedge="12"
+       padding="10 15 10 15"
+       shadow="1"
+       shadowrange="10"
+       shadowcolor="0x000000"
+       shadowalpha="0.25"
+       enabled="false"
+       css="
+         h1 {font-family:Helvetica,Arial; font-size:16px; font-weight:bold; color:#BC0F42; margin:0 0 5px 0;}
+         p  {font-family:Helvetica,Arial; font-size:13px; color:#333333; margin:0;}
+       " /> -->
+    <style name="hs_info_card"
+       type="text"
+       alpha="0"
+       zorder="100000"
+       enabled="false"
+       capture="false"
+       bg="true" bgalpha="1.0" bgcolor="0xffffff"
+       border="true" bordercolor="0xcccccc" borderalpha="1.0" borderwidth="1.0"
+       bgroundedge="12"
+       padding="20 15 20 15"
+       width="260px"
+       wordwrap="true"
+       shadow="1" shadowrange="10" shadowcolor="0x000000" shadowalpha="0.25"
+       css="
+            h1{font-family:Helvetica,Arial; font-size:20px; font-weight:bold; color:#BC0F42; margin:0 0 6px 0; text-align:center;}
+            p{font-family:Helvetica,Arial; font-size:16px; color:#333; line-height:1.1;  margin:0; max-width:260px; max-height:260px; flow-wrap: break-word; text-align: left;}
+       "/>
+
+
+    <style name="hs_circle_img2" 
+        type="image"
+        url="hs_circle.png"
+        scale="0.28"
+        alpha="0"
+        flying="0.03"
+        zorder="999999"
+        enabled="false"/>
+
+    <!-- <style name="hs_circle_tag2" 
+        type="text"
+        alpha="0"
+        zorder="999999"
+        flying="0.03"
+        enabled="false"
+        padding="2 5 2 5"
+        bg="true"
+        bgalpha="1"
+        border="true"
+        bordercolor="0xFFFFFF" 
+        borderalpha="1.0"
+        borderwidth="1.0"
+        bgcolor="0xFFFFFF"
+        bgroundedge="10"
+        onautosized="false"
+        oversampling="3"
+        mipmapping="2"
+        css="h1{font-family:Inter; font-size:15px; color:#1D6FB4; margin:0px;}"
+        /> -->
+
+    <style name="hs_circle_tag2"
+       type="text"
+       alpha="0"
+       zorder="999999"
+       enabled="true"
+       bg="true"
+       bgalpha="1.0"
+       bgcolor="0xffffff"
+       border="true"
+       bordercolor="0xcccccc"
+       borderalpha="1.0"
+       borderwidth="1.0"
+       bgroundedge="12"
+       padding="6 12 6 12"
+       shadow="1"
+       shadowrange="8"
+       shadowcolor="0x000000"
+       shadowalpha="0.3"
+       css="h1{
+            font-family:Helvetica,Arial;
+            font-size:14px;
+            color:#BC0F42;
+            margin:0px;
+       }"/>
+
+    <action name="select_hs2">
+        hs_anim_off2(get(@selected_hs2));
+        set(@selected_hs2, %1);
+        ifnot(%1 == null,
+            hs_anim_on2(get(@selected_hs2)););
+    </action>
+
+    <action name="hs_anim_on2">
+        txtadd(hs_tag2,%1,'_tag2');
+        tween(hotspot[get(hs_tag2)].alpha,0,0.3);
+        set(hotspot[get(hs_tag2)].zorder, 999999);
+        set(hotspot[%1].zorder, 999999);
+        tween(hotspot[%1].scale,1,0.3,easeoutcubic);
+        tween(hotspot[%1].alpha,0,0.3,easeoutcubic);
+        delayedcall(0.2,set(hotspot[%1].zorder,0););
+        txtadd(hs_img2, %1 , '_img2');
+        set(hotspot[get(hs_img2)].zoom, true);
+        set(hotspot[get(hs_img2)].scale, 0.0025);
+        tween(hotspot[get(hs_img2)].alpha,1,0.3,easeoutcubic);
+    </action>
+
+    <action name="hs_anim_off2">
+        if(device.desktop == true, 
+            ifnot(hotspot[%1].hovering == true,
+                txtadd(hs_tag2,%1,'_tag2');
+                tween(hotspot[get(hs_tag2)].alpha,1,0.3););
+            ,
+                txtadd(hs_tag2,%1,'_tag2');
+                tween(hotspot[get(hs_tag2)].alpha,1,0.3););
+
+        set(hotspot[%1].zorder, 100);
+        tween(hotspot[%1].scale,0.5,0.3,easeoutcubic);
+        tween(hotspot[%1].alpha,1,0.3,easeoutcubic);
+        txtadd(hs_img2, %1 , '_img2');
+        set(hotspot[get(hs_img2)].scale, 0.0025);
+        tween(hotspot[get(hs_img2)].alpha,0,0.3,easeoutcubic);
+
+        pulse_hotspot2(%1);
+    </action>
+     <action name="pulse_hotspot2">
+        txtadd(hs_tag2,%1,'_tag2');
+        tween(hotspot[get(hs_tag2)].alpha,1,0.3);
+        set(hotspot[get(hs_tag2)].zorder, 999999);
+        tween(hotspot[%1].scale, 0.60, 0.6, easeinoutquad,
+            tween(hotspot[%1].scale, 0.5, 0.6, easeinoutquad,
+                pulse_hotspot2(%1)
+            )
+        );
+        <!-- if(hotspot[%1].enabled,
+            tween(hotspot[%1].scale,0.60,0.6,easeinoutquad,
+            tween(hotspot[%1].scale,0.50,0.6,easeinoutquad,
+                pulse_hotspot2(%1)
+            )
+            );
+        ); -->
+    </action>
+    <!-- <action name="show_info_card">
+        txtadd(info,%1,'_info');
+        tween(hotspot[get(info)].alpha,1,0.3);
+    </action>
+
+    <action name="hide_info_card">
+        txtadd(info,%1,'_info');
+        tween(hotspot[get(info)].alpha,0,0.3);
+    </action> -->
+    <action name="position_info_card">
+        txtadd(info,%1,'_info');
+        if(view.vlookat GT 30,
+            set(hotspot[get(info)].oy, -60);,
+            set(hotspot[get(info)].oy, 60);
+        );
+    </action>
+
+
+    <action name="show_info_card">
+        txtadd(info,%1,'_info');
+        call(position_info_card(%1));
+        set(hotspot[get(info)].visible, true);
+        tween(hotspot[get(info)].alpha,1,0.25);
+    </action>
+
+    <action name="hide_info_card">
+        txtadd(info,%1,'_info');
+        hs_anim_off2(get(@selected_hs2));
+        set(@selected_hs2, %1);
+        tween(hotspot[get(info)].alpha,0,0.2);
+    </action>
+
+    <action name="hide_other_hotspots">
+        for(set(i,0), i LT hotspot.count, inc(i),
+            if(hotspot[get(i)].name != %1 AND 
+                hotspot[get(i)].name != concat(%1,'_img2') AND 
+                hotspot[get(i)].name != concat(%1,'_tag2'),
+                set(hotspot[get(i)].visible, false);
+            );
+        );
+    </action>
+
+    <action name="show_all_hotspots">
+        for(set(i,0), i LT hotspot.count, inc(i),
+            set(hotspot[get(i)].visible, true);
+        );
+    </action>
+
+    <!-- <action name="hide_other_hotspots">
+        for(set(i,0), i LT hotspot.count, inc(i),
+            if(hotspot[get(i)].name != %1,
+                set(hotspot[get(i)].visible, false);
+            );
+        );
+    </action>
+
+    <action name="show_all_hotspots">
+        for(set(i,0), i LT hotspot.count, inc(i),
+            set(hotspot[get(i)].visible, true);
+        );
+    </action> -->
+
+
+
+    </krpano>

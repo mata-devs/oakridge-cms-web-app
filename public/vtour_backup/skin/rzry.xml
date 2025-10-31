@@ -1,0 +1,82 @@
+<krpano>
+<!--  STYLES  -->
+<style name="leg" type="text" y="45" height="16" css="font-family;Helvetica;font-size:9px;color:0x333333;text-align:center;" bgcolor="0x7ECFDC" vcenter="true" bgroundedge="4" enabled="false"/>
+<style name="txtbase" type="text" align="lefttop" css="data:css_editor" bgcolor="0x666666" vcenter="true"/>
+<style name="dist_tit" x="10" width="50" height="20" bgroundedge="4" enabled="false"/>
+<style name="dist_btn" width="20" height="20" bgroundedge="10"/>
+<style name="dist_val" x="195" width="150" height="20" bgroundedge="4" enabled="false"/>
+<style name="dist_reset" x="355" width="40" height="20" html="Reset" bgroundedge="4"/>
+<style name="db1" x="70" html="-"/>
+<style name="db2" x="95" html="+"/>
+<style name="db3" x="140" html="-"/>
+<style name="db4" x="165" html="+"/>
+<!--  CSS  -->
+<data name="css_editor"> font-family;Helvetica;font-size:11px;color:0xffffff;text-align:center; </data>
+<data name="css_editor2"> font-family;Helvetica;font-size:9px;color:0x333333;text-align:left;margin-left:8px; </data>
+<!--  Editor  -->
+<layer name="filterbox" type="container" keep="true" align="lefttop" x="10" y="10" width="405" height="266" bgcolor="0x333333" bgalpha="1">
+<layer name="dhe_tit" type="text" align="lefttop" x="10" y="10" width="-20" css="font-family;Helvetica;font-size:14px;color:0xffffff;text-align:center;" bgcolor="0xB69D38" bgroundedge="4" vcenter="true" html="START DISTORTED HOTSPOT EDITOR" onclick="TakeName();"/>
+<layer name="leg_sort" style="leg" x="10" width="50" html="Distortion"/>
+<layer name="leg_dist" style="leg" x="70" width="45" html="Tune"/>
+<layer name="leg_fine" style="leg" x="140" width="45" html="Fine Tune"/>
+<layer name="leg_val" style="leg" x="195" width="150" html="Value"/>
+<layer name="leg_reset" style="leg" x="355" width="40" html="Reset"/>
+<!--  RX  -->
+<layer name="rx_tit" style="dist_tit|txtbase" y="70" html="RX"/>
+<layer name="rx_btn_dec" style="dist_btn|txtbase|db1" y="70" ondown="DoDistortion(get(name),rx,dec);"/>
+<layer name="rx_btn_inc" style="dist_btn|txtbase|db2" y="70" ondown="DoDistortion(get(name),rx,inc);"/>
+<layer name="rx_btn_dec_fine" style="dist_btn|txtbase|db3" y="70" ondown="DoDistortion(get(name),rx,dec,fine);"/>
+<layer name="rx_btn_inc_fine" style="dist_btn|txtbase|db4" y="70" ondown="DoDistortion(get(name),rx,inc,fine);"/>
+<layer name="rx_val" style="dist_val|txtbase" y="70" html="0"/>
+<layer name="rx_reset" style="dist_reset|txtbase" y="70" onclick="Reset(rx);"/>
+<!--  RY  -->
+<layer name="ry_tit" style="dist_tit|txtbase" y="100" html="RY"/>
+<layer name="ry_btn_dec" style="dist_btn|txtbase|db1" y="100" ondown="DoDistortion(get(name),ry,dec);"/>
+<layer name="ry_btn_inc" style="dist_btn|txtbase|db2" y="100" ondown="DoDistortion(get(name),ry,inc);"/>
+<layer name="ry_btn_dec_fine" style="dist_btn|txtbase|db3" y="100" ondown="DoDistortion(get(name),ry,dec,fine);"/>
+<layer name="ry_btn_inc_fine" style="dist_btn|txtbase|db4" y="100" ondown="DoDistortion(get(name),ry,inc,fine);"/>
+<layer name="ry_val" style="dist_val|txtbase" y="100" html="0"/>
+<layer name="ry_reset" style="dist_reset|txtbase" y="100" onclick="Reset(ry);"/>
+<!--  RZ  -->
+<layer name="rz_tit" style="dist_tit|txtbase" y="130" html="RZ"/>
+<layer name="rz_btn_dec" style="dist_btn|txtbase|db1" y="130" ondown="DoDistortion(get(name),rz,dec);"/>
+<layer name="rz_btn_inc" style="dist_btn|txtbase|db2" y="130" ondown="DoDistortion(get(name),rz,inc);"/>
+<layer name="rz_btn_dec_fine" style="dist_btn|txtbase|db3" y="130" ondown="DoDistortion(get(name),rz,dec,fine);"/>
+<layer name="rz_btn_inc_fine" style="dist_btn|txtbase|db4" y="130" ondown="DoDistortion(get(name),rz,inc,fine);"/>
+<layer name="rz_val" style="dist_val|txtbase" y="130" html="0"/>
+<layer name="rz_reset" style="dist_reset|txtbase" y="130" onclick="Reset(rz);"/>
+<!--  SCALE  -->
+<layer name="scale_tit" style="dist_tit|txtbase" y="160" html="SCALE"/>
+<layer name="scale_btn_dec" style="dist_btn|txtbase|db1" y="160" ondown="DoDistortion(get(name),scale,dec);"/>
+<layer name="scale_btn_inc" style="dist_btn|txtbase|db2" y="160" ondown="DoDistortion(get(name),scale,inc);"/>
+<layer name="scale_btn_dec_fine" style="dist_btn|txtbase|db3" y="160" ondown="DoDistortion(get(name),scale,dec,fine);"/>
+<layer name="scale_btn_inc_fine" style="dist_btn|txtbase|db4" y="160" ondown="DoDistortion(get(name),scale,inc,fine);"/>
+<layer name="scale_val" style="dist_val|txtbase" y="160" html="0"/>
+<layer name="scale_reset" style="dist_reset|txtbase" y="160" onclick="Reset(scale);"/>
+<!--  ATH / ATV  -->
+<layer name="val_ath" type="text" align="lefttop" x="10" y="190" width="175" height="16" css="data:css_editor2" bgcolor="0x67AAB8" vcenter="true" bgroundedge="4" html=""/>
+<layer name="val_ath_reset" type="text" align="lefttop" x="195" y="190" width="40" height="16" css="data:css_editor" bgcolor="0x666666" vcenter="true" bgroundedge="4" html="Reset" onclick="set(hotspot[get(_activehtsp)].ath, 0);set(layer[val_ath].html, calc:'ATH = ' + hotspot[get(_activehtsp)].ath);"/>
+<layer name="val_atv" type="text" align="lefttop" x="10" y="210" width="175" height="16" css="data:css_editor2" bgcolor="0x67AAB8" vcenter="true" bgroundedge="4" html=""/>
+<layer name="val_atv_reset" type="text" align="lefttop" x="195" y="210" width="40" height="16" css="data:css_editor" bgcolor="0x666666" vcenter="true" bgroundedge="4" html="Reset" onclick="set(hotspot[get(_activehtsp)].atv, 0);set(layer[val_atv].html, calc:'ATV = ' + hotspot[get(_activehtsp)].atv);"/>
+<!--  MASTER RESET  -->
+<layer name="resetall" type="text" align="lefttop" x="245" y="190" width="150" height="36" css="data:css_editor" bgcolor="0x666666" vcenter="true" bgroundedge="4" html="Reset All" onclick="ResetAll"/>
+<!--  PRINT  -->
+<layer name="btn_print" style="txtbase" x="10" y="236" width="50" height="20" bgroundedge="4" html="PRINT" onclick="Print();"/>
+<!--  HOTSPOT NAME  -->
+<layer name="activehtsp" type="text" align="lefttop" x="70" y="236" width="296" height="20" css="data:css_editor" bgcolor="0x666666" vcenter="true" bgroundedge="4" html="CLICK THE HOTSPOT" enabled="false"/>
+<!--  LOGO  -->
+<layer name="logovt" type="text" align="rightbottom" width="20" height="20" x="10" y="10" bgcolor="0x336699" bgalpha="1" bgroundedge="10" html="TUUR" vcenter="true" css="font-family:Helvetica;color:#ffffff;font-size:6px;" onclick="openurl(http://www.virtualtuur.com,_blank);" onloaded="trace(Free Distorted Hotspot Editor © by Virtual Tuur)"/>
+</layer>
+<action name="TakeName"> set(layer[dhe_tit],bgcolor=0x336699, html='STOP DISTORTED HOTSPOT EDITOR', onclick=ExitEditor()); set(layer[activehtsp].bgcolor,0xff0000); delayedcall(0.1, for(set(i,0), i LT hotspot.count, inc(i), set(hotspot[get(i)].tmp_onclick, calc:hotspot[get(i)].onclick); set(hotspot[get(i)].ondown, set(_activehtsp, calc:name);set(_orscale, calc:scale);MakeName();draghotspot()); ); ); </action>
+<action name="ExitEditor"> set(layer[dhe_tit],bgcolor=0xB69D38, html='START DISTORTED HOTSPOT EDITOR', onclick=TakeName()); set(layer[activehtsp],html=calc('CLICK THE HOTSPOT'),bgcolor=0x666666); for(set(i,0), i LT hotspot.count, inc(i), set(hotspot[get(i)].onclick, get(hotspot[get(i)].tmp_onclick)); set(hotspot[get(i)].ondown, ); ); </action>
+<action name="MakeName"> set(layer[activehtsp],html=calc('hotspot name is: ' + _activehtsp),bgcolor=0x008C00); </action>
+<action name="DoDistortion"> set(_vallayer, calc:'%2_val'); if(%3 == 'dec', asyncloop(pressed, if(%4 == 'fine', ifnot(%2 == scale, dec(hotspot[get(_activehtsp)].%2, 0.05); , dec(hotspot[get(_activehtsp)].%2, 0.0001); ); , ifnot(%2 == scale, dec(hotspot[get(_activehtsp)].%2, 0.5); , dec(hotspot[get(_activehtsp)].%2, 0.005); ); ); set(layer[get(_vallayer)].html, calc:hotspot[get(_activehtsp)].%2); ); , asyncloop(pressed, if(%4 == 'fine', ifnot(%2 == scale, inc(hotspot[get(_activehtsp)].%2, 0.05); , inc(hotspot[get(_activehtsp)].%2, 0.0001); ); , ifnot(%2 == scale, inc(hotspot[get(_activehtsp)].%2, 0.5); , inc(hotspot[get(_activehtsp)].%2, 0.005); ); ); set(layer[get(_vallayer)].html, calc:hotspot[get(_activehtsp)].%2); ); ); </action>
+<action name="Reset"> set(_vallayerreset, calc:'%1_val'); if(%1 == scale, set(hotspot[get(_activehtsp)].%1, calc:_orscale); set(layer[get(_vallayerreset)].html, calc:hotspot[get(_activehtsp)].%1); , set(hotspot[get(_activehtsp)].%1,0); set(layer[get(_vallayerreset)].html, calc:hotspot[get(_activehtsp)].%1); ); </action>
+<action name="ResetAll"> set(hotspot[get(_activehtsp)], ath=0,atv=0,rx=0,ry=0,rz=0,scale=calc(_orscale)); set(layer[val_ath].html, calc:'ATH = 0'); set(layer[val_atv].html, calc:'ATV = 0'); set(layer[rx_val].html, calc:'0'); set(layer[ry_val].html, calc:'0'); set(layer[rz_val].html, calc:'0'); set(layer[scale_val].html, calc:_orscale); </action>
+<action name="draghotspot">
+spheretoscreen(ath, atv, hotspotcenterx, hotspotcentery, calc(mouse.stagex LT stagewidth/2 ? 'l' : 'r')); sub(drag_adjustx, mouse.stagex, hotspotcenterx); sub(drag_adjusty, mouse.stagey, hotspotcentery); asyncloop(pressed, sub(dx, mouse.stagex, drag_adjustx); sub(dy, mouse.stagey, drag_adjusty); screentosphere(dx, dy, ath, atv);
+<!--  print_hotspot_pos();  -->
+set(layer[val_ath].html, calc:'ATH = ' + hotspot[get(name)].ath); set(layer[val_atv].html, calc:'ATV = ' + hotspot[get(name)].atv); );
+</action>
+<action name="Print"> showlog(); set(_print, calc:'ath="' + hotspot[get(_activehtsp)].ath +'" atv="' + hotspot[get(_activehtsp)].atv +'" scale="' + hotspot[get(_activehtsp)].scale +'" rx="' + hotspot[get(_activehtsp)].rx +'" ry="' + hotspot[get(_activehtsp)].ry +'" rz="' + hotspot[get(_activehtsp)].rz +'"' ); trace(_print); </action>
+</krpano>
