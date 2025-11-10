@@ -2,7 +2,7 @@
 	
 	<!--
 		webvr.xml
-		krpano 1.23
+		krpano 1.22
 		
 		https://krpano.com/plugins/xmlextensions/#webvr
 		https://krpano.com/plugins/webvr/
@@ -312,8 +312,9 @@
 
 
 	<action name="webvr_hide_all_non_vr_layers" scope="local">
-		forall(layer, lr,
-			if(lr.vr !== true AND lr.parentobject == null,
+		for(set(i,0), i LT layer.count, inc(i),
+			copy(lr, layer[get(i)]);
+			if(lr.vr !== true,
 				copy(lr.vr_backup_visible, lr.visible);
 				set(lr.visible, false);
 			);
@@ -321,7 +322,8 @@
 	</action>
 
 	<action name="webvr_restore_layers" scope="local">
-		forall(layer, lr,
+		for(set(i,0), i LT layer.count, inc(i),
+			copy(lr, layer[get(i)]);
 			if(lr.vr_backup_visible,
 				copy(lr.visible, lr.vr_backup_visible);
 				delete(lr.vr_backup_visible);
@@ -342,7 +344,7 @@
 			);
 			if(webvr.metaquestlink,
 				if(infotext != '', infotext += '[br]');
-				infotext += '[a href="' + escape(open_in_quest_url) + '" target="_blank" style="color:inherit;"]Open in your Meta Quest VR Headset[/a]';
+				infotext += '[a href="' + open_in_quest_url + '" target="_blank" style="color:inherit;"]Open in your Meta Quest VR Headset[/a]';
 			);
 			
 			if(infotext != '',

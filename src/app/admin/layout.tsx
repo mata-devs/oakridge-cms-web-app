@@ -11,14 +11,14 @@ export const revalidate = 0;
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const admin = createSupabaseAdmin();
-  const { count: usersCount, error: usersErr } = await admin
-    .from('users')
+  const { count: profilesCount, error: profilesErr } = await admin
+    .from('profiles')
     .select('id', { head: true, count: 'exact' });
-  if (usersErr) {
-    console.log("error", usersErr)
+  if (profilesErr) {
+    console.log("error", profilesErr)
   }
-  if ((usersCount ?? 0) === 0) {
-    console.log(usersCount)
+  if ((profilesCount ?? 0) === 0) {
+    console.log(profilesCount)
     redirect('/signup'); 
   }
 

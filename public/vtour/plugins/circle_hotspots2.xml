@@ -51,7 +51,7 @@
             hotspot[get(hs_circle2)].loadstyle(hs_circle_img2);
             copy(hotspot[get(hs_circle2)].ath, hotspot[get(h)].ath);
             copy(hotspot[get(hs_circle2)].atv, hotspot[get(h)].atv);
-            txtadd(hotspot[get(hs_circle2)].url, 'vtour/plugins/circular_thumbs/', get(hotspot[get(h)].name), '.png');
+            txtadd(hotspot[get(hs_circle2)].url, '%HTMLPATH%/plugins/circular_thumbs/', get(hotspot[get(h)].name), '.png');
             set(hotspot[get(hs_circle2)].scale, 0.3);
 
             /* tag label above thumb */

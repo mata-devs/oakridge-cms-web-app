@@ -2,7 +2,7 @@
 
 	<!--
 		combobox.xml
-		krpano 1.23
+		krpano 1.22
 		
 		https://krpano.com/plugins/combobox/
 
@@ -537,9 +537,10 @@
 		else
 			openheight_max = Math.max(space_above, space_below);
 	
+
 		<!-- limit the height to the available space (minus some margin) -->
 		var openheight = Math.min(openheight, (openheight_max + cbheight - 20));
-		
+
 		if (openheight < 0)	openheight = 0;
 		else if (openheight > cb.maxopenheight)
 			openheight = cb.maxopenheight;
@@ -552,9 +553,7 @@
 		if (cb.parentobject && cb.parentobject.autoheight == false)
 		{
 			<!-- no vertical offset inside other layers, do only a height clipping -->
-			var is_at_bottom = cb_edge.indexOf("bottom") >= 0;
-			var max_overflow = Math.max(is_at_bottom ? top_overflow : 0, is_at_bottom ? 0 : bottom_overflow, 0);
-			
+			var max_overflow = Math.max(top_overflow, bottom_overflow, 0);
 			openheight -= max_overflow;
 		}
 		else

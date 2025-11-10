@@ -83,6 +83,7 @@
 		set(hotspot[Oak Tree Drive 12].alpha , 0);
 		set(hotspot[Oak Garden Plaza2].alpha , 0);
 		set(hotspot[Block Eighty-Eighgt2].alpha , 0);
+		set(hotspot[Vaf ref2].alpha , 0);
 
 	</action>
 
@@ -100,21 +101,25 @@
 		</image>
 
 		<hotspot name="Oakridge_IT_Center_3" style="hs_circle2" ath="-0.26675009745906664" atv="-0.02214527524089013" depth="1000.0" distorted="false" zoom="false" linkedscene="scene_oakridge_map" linkedscene_hoffset="0.0" use3dtransition="true" onover="default();tween(hotspot[Oakridge_IT_Center_32].alpha , 1);" />
-		<hotspot name="Oakridge_IT_Center_32" url="skin/Oakridge_IT_Center_3.png"  ath="-0.2979214539490158" atv="-0.024083763546298473" scale="0.0024" alpha="0" distorted="true" zoom="true"  onout="tween(alpha , 0);" />
+		<hotspot name="Oakridge_IT_Center_32" url="skin/Oakridge_IT_Center_3.png"  ath="-0.2679214539490158" atv="-0.024083763546298473" scale="0.0024" alpha="0" distorted="true" zoom="true"  onout="tween(alpha , 0);" />
 
 		<hotspot name="Oakridge Pavilion" style="hs_circle2" ath="0.08950586398418636" atv="-0.15756488496089938" depth="1000.0" distorted="false" zoom="false" linkedscene="scene_oakridge_map" linkedscene_hoffset="0.0" use3dtransition="true" onover="default();tween(hotspot[Oakridge Pavilion2].alpha , 1); "/>
-		<hotspot name="Oakridge Pavilion2" url="skin/Oakridge Pavilion.png"  ath="0.13802416057961864" atv="-0.13866965952010155" scale="0.0024" alpha="0" distorted="true" zoom="true" onout="tween(alpha , 0);" />
-
+		<hotspot name="Oakridge Pavilion2" url="skin/Oakridge Pavilion.png"  ath="0.13402416057961864" atv="-0.13866965952010155" scale="0.0024" alpha="0" distorted="true" zoom="true" onout="tween(alpha , 0);" />
+<!-- 
 		<hotspot name="Oakridge IT Center 2" style="hs_circle2" ath="-0.04330992647680887" atv="-0.11068911514839015" depth="1000.0" distorted="false" zoom="false" linkedscene="Oakridge IT Center 2" linkedscene_hoffset="0.0" use3dtransition="true" onover="default();tween(hotspot[Oakridge IT Center 22].alpha , 1);" />
-		<hotspot name="Oakridge IT Center 22" url="skin/Oakridge IT Center 2.png"  ath="-0.11510684328743537" atv="-0.12460702773975132" scale="0.0024" alpha="0" distorted="true" zoom="true" onout="tween(alpha , 0);" />
+		<hotspot name="Oakridge IT Center 22" url="skin/Oakridge IT Center 2.png"  ath="-0.11510684328743537" atv="-0.12460702773975132" scale="0.0024" alpha="0" distorted="true" zoom="true" onout="tween(alpha , 0);" /> -->
 
-		<hotspot name="Oakridge IT Center 1" style="hs_circle2" ath="0.07700557310818112" atv="-0.029958038667383377" depth="1000.0" distorted="false" zoom="false" linkedscene="" linkedscene_hoffset="0.0" use3dtransition="true" onover="default();tween(hotspot[Oakridge IT Center 12].alpha , 1);" />
-		<hotspot name="Oakridge IT Center 12" url="skin/Oakridge IT Center 1.png"  ath="0.12656559749859753" atv="-0.021479804356667936" scale="0.0024" alpha="0" distorted="true" zoom="true" onout="tween(alpha , 0);" />	
+		<!-- <hotspot name="Oakridge IT Center 1" style="hs_circle2" ath="0.07700557310818112" atv="-0.029958038667383377" depth="1000.0" distorted="false" zoom="false" linkedscene="" linkedscene_hoffset="0.0" use3dtransition="true" onover="default();tween(hotspot[Oakridge IT Center 12].alpha , 1);" />
+		<hotspot name="Oakridge IT Center 12" url="skin/Oakridge IT Center 1.png"  ath="0.12656559749859753" atv="-0.021479804356667936" scale="0.0024" alpha="0" distorted="true" zoom="true" onout="tween(alpha , 0);" />	 -->
 
-		<hotspot name="Oakridge Horizons" style="hs_circle2" ath="0.20513299551839737" atv="0.03566836426222527" depth="1000.0" distorted="false" zoom="false" linkedscene="" linkedscene_hoffset="0.0" use3dtransition="true" onover="default();tween(hotspot[Oakridge Horizons2].alpha , 1);" />
-		<hotspot name="Oakridge Horizons2" url="skin/Oakridge Horizons.png"  ath="0.24315421075056065" atv="0.04296005432933888" scale="0.0024" alpha="0" distorted="true" zoom="true" onout="tween(alpha , 0);" />	
+		<!-- <hotspot name="Oakridge Horizons" style="hs_circle2" ath="0.20513299551839737" atv="0.03566836426222527" depth="1000.0" distorted="false" zoom="false" linkedscene="" linkedscene_hoffset="0.0" use3dtransition="true" onover="default();tween(hotspot[Oakridge Horizons2].alpha , 1);" />
+		<hotspot name="Oakridge Horizons2" url="skin/Oakridge Horizons.png"  ath="0.24115421075056065" atv="0.04296005432933888" scale="0.0024" alpha="0" distorted="true" zoom="true" onout="tween(alpha , 0);" />	 -->
 
-		<hotspot name="Oak Tree Drive 2" style="hs_circle2" ath="-0.15372981504203835" atv="0.0804441671469267" depth="1000.0" distorted="false" zoom="false" linkedscene="" linkedscene_hoffset="0.0" use3dtransition="true" onover="default();tween(hotspot[Oak Tree Drive 22].alpha , 1);" />
+		<hotspot name="Vaf ref" style="hs_circle2" ath="-0.13656559749859753" atv="-0.015479804356667936" depth="1000.0" distorted="false" zoom="false" linkedscene="" linkedscene_hoffset="0.0" use3dtransition="true" onover="default();tween(hotspot[Vaf ref2].alpha , 1);" />
+		<hotspot name="Vaf ref2" url="skin/var-ref.png"  ath="-0.07656559749859753" atv="-0.015479804356667936" scale="0.0024" alpha="0" distorted="true" zoom="true" onout="tween(alpha , 0);" />	
+
+
+		<!-- <hotspot name="Oak Tree Drive 2" style="hs_circle2" ath="-0.15372981504203835" atv="0.0804441671469267" depth="1000.0" distorted="false" zoom="false" linkedscene="" linkedscene_hoffset="0.0" use3dtransition="true" onover="default();tween(hotspot[Oak Tree Drive 22].alpha , 1);" />
 		<hotspot name="Oak Tree Drive 22" url="skin/Oak Tree Drive 2.png"  ath="-0.20372981504203835" atv="0.09504441671469267" scale="0.0024" alpha="0" distorted="true" zoom="true" onout="tween(alpha , 0);" />
 
 		<hotspot name="Oak Tree Drive 1" style="hs_circle2" ath="0.02434378416643085" atv="0.18098417170177492" depth="1000.0" distorted="false" zoom="false" linkedscene="" linkedscene_hoffset="0.0" use3dtransition="true" onover="default();tween(hotspot[Oak Tree Drive 12].alpha , 1);" />
@@ -124,7 +129,7 @@
 		<hotspot name="Oak Garden Plaza2" url="skin/Oak Garden Plaza.png"  ath="-0.01622591343300428" atv="0.02837674224483547" scale="0.0024" alpha="0" distorted="true" zoom="true" onout="tween(alpha , 0);" />
 
 		<hotspot name="Block Eighty-Eighgt" style="hs_circle2"  ath="0.19004991614219716" atv="-0.043395725015785565" depth="1000.0" distorted="false" zoom="false" linkedscene="" linkedscene_hoffset="0.0" use3dtransition="true" onover="default();tween(hotspot[Block Eighty-Eighgt2].alpha , 1);" />
-		<hotspot name="Block Eighty-Eighgt2" url="skin/Block Eighty-Eighgt.png" ath="0.22804991614219716" atv="-0.053395725015785565" scale="0.0024" alpha="0" distorted="true" zoom="true" onout="tween(alpha , 0);" />
+		<hotspot name="Block Eighty-Eighgt2" url="skin/Block Eighty-Eighgt.png" ath="0.22804991614219716" atv="-0.053395725015785565" scale="0.0024" alpha="0" distorted="true" zoom="true" onout="tween(alpha , 0);" /> -->
 
 
 	</scene>

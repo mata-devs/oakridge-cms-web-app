@@ -44,7 +44,7 @@ export function UserProvider({ children, initialUser = null, initialProfile = nu
 
       if (user) {
         const { data: p, error } = await supabase
-          .from('users')
+          .from('profiles')
           .select('id, display_name, role, disabled, created_at')
           .eq('id', user.id)
           .single();
@@ -67,7 +67,7 @@ export function UserProvider({ children, initialUser = null, initialProfile = nu
       setUser(session?.user ?? null);
       if (session?.user) {
         const { data: p } = await supabase
-          .from('users')
+          .from('profiles')
           .select('id, display_name, role, disabled, created_at')
           .eq('id', session.user.id)
           .single();

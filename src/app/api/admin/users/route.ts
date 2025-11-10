@@ -23,7 +23,7 @@ export async function GET(req: Request) {
 
     // 2) Caller role from users (trusted source)
     const { data: me, error: meErr } = await supaServer
-      .from('users')
+      .from('profiles')
       .select('role, disabled')
       .eq('id', user.id)
       .single();
@@ -50,7 +50,7 @@ export async function GET(req: Request) {
     // 4) Join with users to get roles/flags from DB
     const ids = data.users.map(u => u.id);
     const { data: users, error: pErr } = await supaAdmin
-      .from('users')
+      .from('profiles')
       .select('id, display_name, role, disabled, created_at')
       .in('id', ids);
     if (pErr) throw pErr;

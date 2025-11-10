@@ -6,7 +6,7 @@ export const runtime = 'nodejs';
 function adminClient() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY! // service role
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 }
 
@@ -19,9 +19,10 @@ export async function POST(req: Request) {
 
     const supa = adminClient();
 
+    // Check if any profiles exist
     const { count, error: countErr } = await supa
-      .from('users')
-      .select('id', { count: 'exact', head: true });
+      .from('profiles')
+      .select('*', { count: 'exact', head: true });
     if (countErr) throw countErr;
 
     if ((count ?? 0) > 0) {
@@ -39,17 +40,19 @@ export async function POST(req: Request) {
     if (error) throw error;
 
     const user = data.user!;
-    const { error: pe } = await supa.from('users').insert({
+
+    // Use upsert instead of insert to handle any race conditions
+    const { error: profileError } = await supa.from('profiles').upsert({
       id: user.id,
-      email: user.email,
       display_name: name,
       role: 'super-admin',
       disabled: false,
     });
-    if (pe) throw pe;
+
+    if (profileError) throw profileError;
 
     return NextResponse.json({ ok: true, uid: user.id });
-  } catch (e: any) {
-    return NextResponse.json({ error: e?.message || 'Server error' }, { status: 500 });
+  } catch (e: unknown) {
+    return NextResponse.json({ error: e instanceof Error ? e.message : 'Server error' }, { status: 500 });
   }
 }
