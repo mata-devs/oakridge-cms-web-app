@@ -789,7 +789,7 @@ export default function CMSPage() {
         )}
 
         {canShowForm && (
-          <div className='md:h-[90%] overflow-scroll custom-scrollbar'>
+          <div className='md:h-[85%] overflow-scroll custom-scrollbar'>
             <ImageDropzone
               imageUrl={imageUrl ?? undefined}
               onPickClick={onPickClick}
@@ -803,7 +803,7 @@ export default function CMSPage() {
             </div>
 
             <div className="space-y-1 mt-2">
-              <LabeledInput label="Title" value={title} onChange={setTitle} placeholder="Enter title" />
+              <LabeledInput label="Exhibitor" value={title} onChange={setTitle} placeholder="Enter title" />
               <LabeledInput label="Subheading" value={subheading} onChange={setSubheading} placeholder="Optional subheading" />
               <LabeledTextarea label="Description" value={description} onChange={setDescription} placeholder="Write a short description..." rows={3} />
               <div className="text-xs text-white/60"><div className="text-end">{description.length} chars</div></div>
@@ -891,7 +891,7 @@ export default function CMSPage() {
                       <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4A4 4 0 004 12z"/></svg>
                     </span>
                   ) : (
-                    tab === 0 || !eventId ? 'Publish' : 'Update'
+                    tab === 0 || !eventId ? 'Add Exhibit' : 'Update'
                   )}
               </button>
               <button onClick={clearForm} className="px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white hover:cursor-pointer">
