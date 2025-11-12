@@ -5,34 +5,54 @@ import EventModalOverlay2 from "./components/EventModalOverlay2";
 import { fetchEventsForClient, EventType, formatDateRange, formatTimeRange } from "./components/helpersAndInputs";
 import KrpanoHotspotViewer from "./components/KrpanoHotspotViewer";
 
+interface Hotspot {
+  id: string;
+  name: string;
+  title: string;
+  hotspot_logo?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export default function Home() {
   const [events, setEvents] = useState<EventType[]>([]);
   const [loadingEvents, setLoadingEvents] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [open, setOpen] = useState(false);
   const [hotspotGroup, setHotspotGroup] = useState<string>("");
+  const [hotspotLogo, setHotspotLogo] = useState<string>("");
+  const [hotspotData, setHotspotData] = useState<Hotspot | null>(null);
 
-  // useEffect(() => {
-  //   if (!hotspotGroup) {
-  //     setEvents([]);
-  //     setShowModal(false);
-  //     setOpen(false);
-  //     return;
-  //   }
+  // Fetch hotspot data when hotspotGroup changes
+  useEffect(() => {
+    const fetchHotspotData = async (hotspotName: string) => {
+      try {
+        const response = await fetch(`/api/hotspots?name=${encodeURIComponent(hotspotName)}`);
+        if (response.ok) {
+          const hotspots: Hotspot[] = await response.json();
+          if (hotspots.length > 0) {
+            const hotspot = hotspots[0]; // Take the first matching hotspot
+            setHotspotData(hotspot);
+            setHotspotLogo(hotspot.hotspot_logo || "");
+          } else {
+            setHotspotData(null);
+            setHotspotLogo("");
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching hotspot data:", error);
+        setHotspotData(null);
+        setHotspotLogo("");
+      }
+    };
 
-  //   const load = async () => {
-  //     setLoadingEvents(true);
-  //     await fetchEventsForClient({ setEvents, setLoadingEvents, hotspotGroup });
-  //     setLoadingEvents(false);
-
-  //     const isInIframe = window.self !== window.top;
-  //     if (!isInIframe) {
-  //       setShowModal(true);
-  //       setOpen(true);
-  //     }
-  //   };
-  //   load();
-  // }, [hotspotGroup]);
+    if (hotspotGroup) {
+      fetchHotspotData(hotspotGroup);
+    } else {
+      setHotspotData(null);
+      setHotspotLogo("");
+    }
+  }, [hotspotGroup]);
 
   useEffect(() => {
     if (!hotspotGroup) {
@@ -57,6 +77,7 @@ export default function Home() {
     setOpen(false);
     setShowModal(false);
     setHotspotGroup("");
+    setHotspotData(null);
   };
 
   return (
@@ -64,35 +85,6 @@ export default function Home() {
       <KrpanoHotspotViewer xml="/vtour/tour.xml" setHotspot={setHotspotGroup} />
 
       <AnimatePresence>
-        {/* {showModal && events.length > 0 && open && (
-          <motion.div
-            key="eventModal"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.35, ease: "easeInOut" }}
-            className="absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-sm z-50"
-          >
-            <EventModalOverlay2
-              container="fullscreen"
-              open={open}
-              onClose={onClose}
-              events={events.map((e) => ({
-                ...e,
-                imageUrl: e.image_url ?? undefined,
-                title: e.title ?? "(untitled)",
-                subheading: e.subheading ?? "",
-                description: e.description ?? "",
-                dateRange: formatDateRange(e.start_date, e.end_date),
-                timeText: formatTimeRange(e.start_time, e.end_time),
-                ctaLabel: e.cta_label ?? "",
-                ctaHref: e.cta_href ?? "",
-              }))}
-              initialIndex={0}
-            />
-          </motion.div>
-        )} */}
-
         {showModal && open && (
           <motion.div
             key="eventModal"
@@ -108,7 +100,7 @@ export default function Home() {
                 onClick={onClose}
               >
                 <div
-                  className="relative w-full max-w-4xl rounded-2xl bg-white shadow-2xl h-[50%] p-6 "
+                  className="relative w-full max-w-4xl rounded-2xl bg-white shadow-2xl h-[80%] p-6 "
                   onClick={(e) => e.stopPropagation()}
                 >
                   {/* Close button */}
@@ -141,6 +133,7 @@ export default function Home() {
                 container="fullscreen"
                 open={open}
                 onClose={onClose}
+                hotspot_logo={hotspotLogo}
                 events={events.map((e) => ({
                   ...e,
                   imageUrl: e.image_url ?? undefined,
@@ -193,8 +186,6 @@ export default function Home() {
             )}
           </motion.div>
         )}
-
-
       </AnimatePresence>
     </div>
   );

@@ -6,6 +6,7 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import { ImageLightbox } from './Lightbox';
 import CTAModal from './CTAModal';
+import { CategoryOutlined, StorefrontOutlined } from '@mui/icons-material';
 
 
 export type EventItem = {
@@ -17,6 +18,7 @@ export type EventItem = {
   timeText?: string;
   ctaLabel?: string;
   ctaHref?: string;
+  category?: string;
 };
 
 type Props = {
@@ -140,7 +142,7 @@ export default function EventModalOverlay({
                   alt={current.title || ''}
                   fill
                   unoptimized
-                  className="object-contain object-center bg-black/50 cursor-zoom-in hover:scale-[1.02] transition-transform duration-300 hover:opacity-70 hover:duration-500"
+                  className="object-contain object-center  cursor-zoom-in hover:scale-[1.02] transition-transform duration-300 hover:opacity-70 hover:duration-500"
                   sizes="(max-width: 640px) 100vw, 560px"
                   priority
                   onClick={() => setLightboxOpen(true)}
@@ -159,13 +161,13 @@ export default function EventModalOverlay({
               {current?.title}
             </h2>
 
-            {!!current?.subheading && (
+            {/* {!!current?.subheading && (
               <p className="mt-1 text-center text-sm text-neutral-600 whitespace-pre-wrap break-words [overflow-wrap:anywhere] hyphens-auto">
                 {current?.subheading}
               </p>
-            )}
+            )} */}
 
-            {(current?.dateRange || current?.timeText) && (
+            {/* {(current?.dateRange || current?.timeText) && (
               <div className="mt-2 flex items-center justify-center gap-5 text-sm text-neutral-700">
                 {current?.dateRange && (
                   <span className="inline-flex items-center gap-1.5">
@@ -177,6 +179,23 @@ export default function EventModalOverlay({
                   <span className="inline-flex items-center gap-1.5">
                     <ScheduleIcon sx={{ fontSize: 20 }} />
                     {current?.timeText}
+                  </span>
+                )}
+              </div>
+            )} */}
+
+            {(!!current?.subheading || current?.category) && (
+              <div className="mt-2 flex items-center justify-center gap-5 text-sm text-neutral-700">
+                {current?.subheading && (
+                  <span className="inline-flex items-center gap-1.5">
+                    <StorefrontOutlined sx={{ fontSize: 20 }} />
+                    {current?.subheading}
+                  </span>
+                )}
+                {current?.category && (
+                  <span className="inline-flex items-center gap-1.5">
+                    <CategoryOutlined sx={{ fontSize: 20 }} />
+                    {current?.category}
                   </span>
                 )}
               </div>

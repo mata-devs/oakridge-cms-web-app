@@ -27,6 +27,7 @@ export async function PATCH(req: Request, {params}: Ctx) {
   const update = {
     title: body.title ?? undefined,
     subheading: body.subheading ?? undefined,
+    category: body.category ?? undefined,
     description: body.description ?? undefined,
     start_date: body.startDate ?? undefined,
     end_date: body.endDate ?? undefined,

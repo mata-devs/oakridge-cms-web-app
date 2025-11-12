@@ -13,6 +13,7 @@ export type EventType = {
   id: string;
   title?: string;
   subheading?: string;
+  category?: string;
   description?: string;
   start_date?: string;
   end_date?: string;

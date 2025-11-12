@@ -33,6 +33,7 @@ export async function POST(req: Request) {
   const payload = {
     title: body.title ?? null,
     subheading: body.subheading ?? null,
+    category: body.category ?? null,
     description: body.description ?? null,
     start_date: body.startDate ?? null,
     end_date: body.endDate ?? null,

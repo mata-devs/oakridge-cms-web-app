@@ -10,29 +10,33 @@ export async function GET(req: Request) {
     const supabase = createSupabaseServerAnon();
     const url = new URL(req.url);
 
+    const name = url.searchParams.get('name');
     const limit = Math.min(Number(url.searchParams.get('limit') || 50), 200);
     const offset = Math.max(Number(url.searchParams.get('offset') || 0), 0);
-    const order = (url.searchParams.get('order') || 'order.asc').toLowerCase();
 
-    // parse "column.direction"
-    const [col, dir] = order.split('.');
-    const ascending = dir !== 'desc';
+    // If name is provided, return hotspots that match the name
+    if (name) {
+      const { data, error } = await supabase
+        .from('hotspots')
+        .select('*')
+        .ilike('name', `%${name}%`); // Case-insensitive partial match
 
-    let q = supabase
-      .from('hotspots')
-      .select('id,name,description,image_url,level,order,startdate,enddate,starttime,endtime,title,cta_label,cta_href,created_at,updated_at', { count: 'exact' });
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
+      }
 
-    // Always sort first by level (grouping)
-    q = q.order('level', { ascending: true });
-
-    // Then sort within each level by your order (drag order)
-    if (col === 'order') {
-      q = q.order('order', { ascending });
-    } else {
-      q = q.order(col || 'created_at', { ascending });
+      return NextResponse.json(data || []);
     }
 
-    // pagination
+    // If no name, return all hotspots with pagination
+    let q = supabase
+      .from('hotspots')
+      .select('*', { count: 'exact' });
+
+    // Sort by creation date (newest first) by default
+    q = q.order('created_at', { ascending: false });
+
+    // Apply pagination
     const from = offset;
     const to = offset + limit - 1;
 

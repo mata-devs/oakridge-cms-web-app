@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import CTAModal from './CTAModal';
 import EventModalOverlay from './EventModalOverlay';
 
 export type EventItem = {
@@ -22,6 +21,7 @@ type Props = {
   events: EventItem[];
   container?: 'contained' | 'fullscreen';
   initialIndex?: number;
+  hotspot_logo?: string;
 };
 
 export default function EventModalOverlay2({
@@ -30,6 +30,7 @@ export default function EventModalOverlay2({
   events,
   container = 'contained',
   initialIndex = 0,
+  hotspot_logo,
 }: Props) {
   const [selected, setSelected] = useState<EventItem | null>(null);
 
@@ -53,7 +54,7 @@ export default function EventModalOverlay2({
 
         {/* Exhibit list modal */}
         <div
-          className="relative w-full max-w-4xl rounded-2xl bg-white shadow-2xl h-[50%]"
+          className="relative w-full max-w-4xl rounded-2xl bg-white shadow-2xl h-[80%] flex flex-col "
           onClick={(e) => e.stopPropagation()}
         >
           <div className="absolute z-30 top-0 right-0 translate-x-1/3 -translate-y-1/3">
@@ -66,43 +67,61 @@ export default function EventModalOverlay2({
             </button>
           </div>
 
-
-          <div className="p-6 h-full overflow-y-auto custom-scrollbar">
+          <div className='h-[80%] '>
+            {
+              hotspot_logo && (
+                <>
+                  <Image
+                    src={hotspot_logo}
+                    alt="Hotspot Logo"
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    className="w-full h-32 object-contain rounded-t-2xl bg-white p-4"
+                  />
+                </>
+              )
+            }
             <h2 className=" bg-white text-center text-2xl font-semibold mb-6 text-neutral-700">
-              Exhibits
+              Exhibitors
             </h2>
+            <div className='h-[80%] md:h-[90%] flex flex-col justify-center'>
+              <div className="p-6 h-full overflow-y-auto custom-scrollbar">
 
-            {/* Exhibit grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ">
-              {events.map((item, i) => (
-                <div
-                  key={i}
-                  onClick={() => setSelected(item)}
-                  className="group relative cursor-pointer overflow-hidden rounded-xl bg-neutral-100 hover:bg-neutral-200 transition duration-300"
-                >
-                  <div className="relative w-full aspect-[4/3]">
-                    {item.imageUrl ? (
-                      <Image
-                        src={item.imageUrl}
-                        alt={item.title}
-                        fill
-                        unoptimized
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="flex items-center justify-center w-full h-full bg-gray-300 text-gray-600">
-                        No Image
+                {/* Exhibit grid */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ">
+                  {events.map((item, i) => (
+                    <div
+                      key={i}
+                      onClick={() => setSelected(item)}
+                      className="group relative cursor-pointer overflow-hidden rounded-xl bg-neutral-100 hover:bg-neutral-200 transition duration-300"
+                    >
+                      <div className="relative w-full aspect-[4/3]">
+                        {item.imageUrl ? (
+                          <Image
+                            src={item.imageUrl}
+                            alt={item.title}
+                            fill
+                            unoptimized
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          />
+                        ) : (
+                          <div className="flex items-center justify-center w-full h-full bg-gray-300 text-gray-600">
+                            No Image
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition" />
-                  <div className="absolute bottom-0 left-0 right-0 p-3 text-white text-center">
-                    <p className="font-medium text-sm md:text-base truncate">
-                      {item.title}
-                    </p>
-                  </div>
+                      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition" />
+                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white text-center">
+                        <p className="font-medium text-sm md:text-base truncate">
+                          {item.title}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+
             </div>
           </div>
         </div>

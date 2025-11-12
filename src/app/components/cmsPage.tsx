@@ -28,6 +28,7 @@ export default function CMSPage() {
   const [mounted, setMounted] = useState(false);
   const [title, setTitle] = useState('');
   const [subheading, setSubheading] = useState('');
+  const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -61,6 +62,7 @@ export default function CMSPage() {
     id: '',
     title: '',
     subheading: '',
+    category: '',
     description: '',
     start_date: '',
     end_date: '',
@@ -103,6 +105,7 @@ export default function CMSPage() {
       const s = JSON.parse(raw);
       setTitle(s.title || '');
       setSubheading(s.subheading || '');
+      setCategory(s.category || '');
       setDescription(s.description || '');
       setStartDate(s.startDate || '');
       setEndDate(s.endDate || '');
@@ -133,6 +136,7 @@ export default function CMSPage() {
           JSON.stringify({
             title,
             subheading,
+            category,
             description,
             startDate,
             endDate,
@@ -151,7 +155,7 @@ export default function CMSPage() {
       } catch {}
     }, 300);
     return () => clearTimeout(id);
-  }, [title, subheading, description, startDate, endDate, startTime, endTime, publishModal, forceOpen, ctaLabel, ctaHref, imageFile, imageUrl, published, publishAt, unpublishAt]);
+  }, [title, subheading, category, description, startDate, endDate, startTime, endTime, publishModal, forceOpen, ctaLabel, ctaHref, imageFile, imageUrl, published, publishAt, unpublishAt]);
 
   useEffect(() => {
     const id = setTimeout(() => {
@@ -164,7 +168,7 @@ export default function CMSPage() {
         } catch {}
       }
       const payload = {
-        title, subheading, description, startDate, endDate, startTime, endTime,
+        title, subheading, category, description, startDate, endDate, startTime, endTime,
         publishModal, forceOpen, ctaLabel, ctaHref, imageDataUrl,
       };
       previewRef.current?.contentWindow?.postMessage(
@@ -173,7 +177,7 @@ export default function CMSPage() {
       );
     }, 120);
     return () => clearTimeout(id);
-  }, [title, subheading, description, startDate, endDate, startTime, endTime, publishModal, forceOpen, ctaLabel, ctaHref, imageUrl]);
+  }, [title, subheading, category, description, startDate, endDate, startTime, endTime, publishModal, forceOpen, ctaLabel, ctaHref, imageUrl]);
 
   function onPickClick() { inputRef.current?.click(); }
 
@@ -205,7 +209,8 @@ export default function CMSPage() {
   }
 
   function resetAll() {
-    setTitle(''); setSubheading(''); setDescription('');
+    setTitle(''); setSubheading(''); setCategory('');
+    setDescription('');
     setStartDate(''); setEndDate(''); setStartTime('');
     setPublishModal(true); setForceOpen(true);
     setCtaLabel(''); setCtaHref('');
@@ -222,7 +227,7 @@ export default function CMSPage() {
   }
 
   function clearForm() {
-    setTitle(''); setSubheading(''); setDescription('');
+    setTitle(''); setSubheading(''); setCategory(''); setDescription('');
     setStartDate(''); setEndDate(''); setStartTime('');
     setCtaLabel(''); setCtaHref('');
     setImageFile(null); setImageUrl(null);
@@ -322,7 +327,7 @@ export default function CMSPage() {
       }
 
       const payload = {
-        title, subheading, description,
+        title, subheading, category, description,
         startDate: startDate || null,
         endDate: endDate||null,
         startTime: startTime||null,
@@ -452,6 +457,7 @@ export default function CMSPage() {
     imageUrl: e.image_url ?? undefined,
     title: e.title ?? '(untitled)',
     subheading: e.subheading ?? '',
+    category: e.category ?? '',
     description: e.description ?? '',
     dateRange: formatDateRange(e.start_date, e.end_date),
     timeText: formatTimeRange(e.start_time, e.end_time),
@@ -465,6 +471,7 @@ export default function CMSPage() {
     imageUrl: imageUrl ?? undefined,
     title: title?.trim() || '(untitled)',
     subheading: subheading || '',
+    category: category || '',
     description: description || '',
     dateRange: formatDateRange(startDate, endDate),
     timeText: formatTimeRange(startTime, endTime),
@@ -476,6 +483,7 @@ export default function CMSPage() {
   const hasFormContent =
     (title?.trim()?.length ?? 0) > 0 ||
     (subheading?.trim()?.length ?? 0) > 0 ||
+    (category?.trim()?.length ?? 0) > 0 ||
     (description?.trim()?.length ?? 0) > 0 ||
     !!startDate || !!endDate || !!startTime || !!endTime ||
     (ctaLabel?.trim()?.length ?? 0) > 0 ||
@@ -645,6 +653,7 @@ export default function CMSPage() {
                                       setEventId(ev.id);
                                       setTitle(ev.title || '');
                                       setSubheading(ev.subheading || '');
+                                      setCategory(ev.category || '');
                                       setDescription(ev.description || '');
                                       setStartDate(ev.start_date || '');
                                       setEndDate(ev.end_date || '');
@@ -673,6 +682,7 @@ export default function CMSPage() {
                                         setEventId(ev.id);
                                         setTitle(ev.title || '');
                                         setSubheading(ev.subheading || '');
+                                        setCategory(ev.category || '');
                                         setDescription(ev.description || '');
                                         setStartDate(ev.start_date || '');
                                         setEndDate(ev.end_date || '');
@@ -745,6 +755,7 @@ export default function CMSPage() {
                     setEventId(ev.id);
                     setTitle(ev.title || '');
                     setSubheading(ev.subheading || '');
+                    setCategory(ev.category || '');
                     setDescription(ev.description || '');
                     setStartDate(ev.start_date || '');
                     setEndDate(ev.end_date || '');
@@ -804,17 +815,18 @@ export default function CMSPage() {
 
             <div className="space-y-1 mt-2">
               <LabeledInput label="Exhibitor" value={title} onChange={setTitle} placeholder="Enter title" />
-              <LabeledInput label="Subheading" value={subheading} onChange={setSubheading} placeholder="Optional subheading" />
+              <LabeledInput label="Booth" value={subheading} onChange={setSubheading} placeholder="e.g. Booth # 1..." />
+              <LabeledInput label="Category" value={category} onChange={setCategory} placeholder="e.g. Accessories" />
               <LabeledTextarea label="Description" value={description} onChange={setDescription} placeholder="Write a short description..." rows={3} />
               <div className="text-xs text-white/60"><div className="text-end">{description.length} chars</div></div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
+            {/* <div className="grid grid-cols-2 gap-2">
               <LabeledDate label="Start date" value={startDate} onChange={setStartDate} />
               <LabeledDate label="End date" value={endDate} onChange={setEndDate} min={startDate || undefined} />
-            </div>
+            </div> */}
 
-            <div className="grid grid-cols-2 mt-1 gap-2">
+            {/* <div className="grid grid-cols-2 mt-1 gap-2">
               <label className="block">
                 <div className="text-sm mb-1 text-white/80">
                   Start time
@@ -840,7 +852,7 @@ export default function CMSPage() {
                 />
               </label>
             </div>
-            {dateError && <div className="text-xs text-red-300">{dateError}</div>}
+            {dateError && <div className="text-xs text-red-300">{dateError}</div>} */}
 
             <div className="grid grid-cols-2 mt-1 gap-2">
               <LabeledInput label="CTA label" value={ctaLabel} onChange={setCtaLabel} placeholder="Learn More" />
@@ -858,7 +870,7 @@ export default function CMSPage() {
               </label>
 
               <div />
-              <label className="block">
+              {/* <label className="block">
                 <div className="text-sm mb-1 text-white/80">Publish at</div>
                 <input
                   style={{ colorScheme: 'dark' }}
@@ -878,7 +890,7 @@ export default function CMSPage() {
                   onChange={(e) => setUnpublishAt(e.target.value)}
                   className="w-full rounded-lg bg-[#131a2a] border border-white/10 px-3 py-2 outline-none focus:border-white/30"
                 />
-              </label>
+              </label> */}
             </div>
 
             <div className="flex gap-2 mt-1 pt-2">

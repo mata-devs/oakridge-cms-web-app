@@ -4,14 +4,14 @@
     "/api/admin/events/reorder": {},
     "/api/admin/events": {},
     "/api/admin/events/[id]": {},
+    "/api/admin/seasons/create": {},
     "/api/admin/seasons": {},
     "/api/admin/seasons/set_season/[id]": {},
-    "/api/admin/seasons/create": {},
     "/api/admin/users/[uid]": {},
     "/api/admin/users/create": {},
     "/api/admin/users": {},
-    "/api/bootstrap/create-first-admin": {},
     "/api/events": {},
+    "/api/bootstrap/create-first-admin": {},
     "/api/hotspots": {},
     "/api/seasons": {}
   }
