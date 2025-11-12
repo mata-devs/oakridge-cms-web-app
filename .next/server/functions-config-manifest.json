@@ -3,16 +3,16 @@
   "functions": {
     "/api/admin/events/reorder": {},
     "/api/admin/events": {},
-    "/api/admin/events/[id]": {},
-    "/api/admin/seasons/create": {},
     "/api/admin/seasons": {},
-    "/api/admin/seasons/set_season/[id]": {},
+    "/api/admin/seasons/create": {},
     "/api/admin/users/[uid]": {},
+    "/api/admin/events/[id]": {},
+    "/api/admin/seasons/set_season/[id]": {},
     "/api/admin/users/create": {},
-    "/api/admin/users": {},
-    "/api/events": {},
     "/api/bootstrap/create-first-admin": {},
+    "/api/events": {},
     "/api/hotspots": {},
+    "/api/admin/users": {},
     "/api/seasons": {}
   }
 }

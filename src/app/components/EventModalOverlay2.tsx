@@ -68,25 +68,27 @@ export default function EventModalOverlay2({
           </div>
 
           <div className='h-[80%] '>
-            {
-              hotspot_logo && (
-                <>
-                  <Image
-                    src={hotspot_logo}
-                    alt="Hotspot Logo"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="w-full h-32 object-contain rounded-t-2xl bg-white p-4"
-                  />
-                </>
-              )
-            }
-            <h2 className=" bg-white text-center text-2xl font-semibold mb-6 text-neutral-700">
-              Exhibitors
-            </h2>
-            <div className='h-[80%] md:h-[90%] flex flex-col justify-center'>
-              <div className="p-6 h-full overflow-y-auto custom-scrollbar">
+            <div className="flex flex-col items-center justify-center pt-4 px-6 relative">
+              {
+                hotspot_logo && (
+                  <>
+                    <Image
+                      src={hotspot_logo}
+                      alt="Hotspot Logo"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="w-full h-32 object-contain rounded-t-2xl bg-white p-4"
+                    />
+                  </>
+                )
+              }
+              <h2 className=" bg-white text-center text-2xl font-semibold mb-6 text-neutral-700">
+                Exhibitors
+              </h2>
+            </div>
+            <div className='h-[75%] md:h-[85%] flex flex-col justify-center'>
+              <div className="p-4 md:p-6 h-full overflow-y-auto custom-scrollbar">
 
                 {/* Exhibit grid */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ">
