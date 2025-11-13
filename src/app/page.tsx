@@ -176,11 +176,11 @@ export default function Home() {
                       sizes="100vw"
                     />
                     {/* <div className="text-gray-500 text-6xl">😕</div> */}
-                    <h2 className="text-2xl font-semibold text-neutral-700">
-                      No Events Found
+                    <h2 className="text-2xl font-semibold text-neutral-700 italic">
+                      Coming Soon! 
                     </h2>
                     <p className="text-neutral-500 max-w-md">
-                      There are no exhibits or events available for this location.
+                      November 15 to 18 2025
                     </p>
                     <button
                       onClick={onClose}
