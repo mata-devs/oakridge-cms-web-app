@@ -87,15 +87,38 @@ export default function KrpanoHotspotViewer({
         krpanoRef.current = k;
 
         // Wait 0.5s for hs_circle2 hotspots to be generated, then attach onclick
+        // k.call(`
+        //   delayedcall(0.5,
+        //     for(set(i,0), i LT hotspot.count, inc(i),
+        //       if(hotspot[get(i)].style == 'hs_circle2' OR contains(get(hotspot[get(i)].name),'_img2'),
+        //         set(hotspot[get(i)].onclick, js(window.ReactHotspotClickLogger(get(name))));
+        //       );
+        //     );
+        //   );
+        // `);
+
         k.call(`
           delayedcall(0.5,
             for(set(i,0), i LT hotspot.count, inc(i),
-              if(hotspot[get(i)].style == 'hs_circle2' OR contains(get(hotspot[get(i)].name),'_img2'),
-                set(hotspot[get(i)].onclick, js(window.ReactHotspotClickLogger(get(name))));
+
+              // Read the basename attribute
+              copy(base, hotspot[get(i)].data_basename);
+
+              // If empty → skip
+              if(base,
+
+                // Build:  js(window.ReactHotspotClickLogger('BASENAME'))
+                txtadd(fn, "js(window.ReactHotspotClickLogger('", get(base), "'))");
+
+                // Assign it as the hotspot onclick
+                set(hotspot[get(i)].onclick, get(fn));
               );
             );
           );
         `);
+
+
+
 
         console.log("✅ Logger attached to hs_circle2 and _img2 hotspots");
       },

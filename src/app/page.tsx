@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import EventModalOverlay2 from "./components/EventModalOverlay2";
 import { fetchEventsForClient, EventType, formatDateRange, formatTimeRange } from "./components/helpersAndInputs";
 import KrpanoHotspotViewer from "./components/KrpanoHotspotViewer";
+import Image from "next/image";
 
 interface Hotspot {
   id: string;
@@ -31,7 +32,7 @@ export default function Home() {
         if (response.ok) {
           const hotspots: Hotspot[] = await response.json();
           if (hotspots.length > 0) {
-            const hotspot = hotspots[0]; // Take the first matching hotspot
+            const hotspot = hotspots[0];
             setHotspotData(hotspot);
             setHotspotLogo(hotspot.hotspot_logo || "");
           } else {
@@ -85,7 +86,7 @@ export default function Home() {
       <KrpanoHotspotViewer xml="/vtour/tour.xml" setHotspot={setHotspotGroup} />
 
       <AnimatePresence>
-        {showModal && open && (
+        {hotspotGroup!== "vaf ref" &&showModal && open && (
           <motion.div
             key="eventModal"
             initial={{ opacity: 0 }}
@@ -167,7 +168,14 @@ export default function Home() {
                   </div>
 
                   <div className="flex flex-col items-center space-y-4">
-                    <div className="text-gray-500 text-6xl">😕</div>
+                    <Image
+                      src={hotspotLogo}
+                      alt="Hotspot Logo"
+                      width={150}
+                      height={150}
+                      sizes="100vw"
+                    />
+                    {/* <div className="text-gray-500 text-6xl">😕</div> */}
                     <h2 className="text-2xl font-semibold text-neutral-700">
                       No Events Found
                     </h2>
