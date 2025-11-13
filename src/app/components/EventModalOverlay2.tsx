@@ -37,7 +37,7 @@ export default function EventModalOverlay2({
   if (!open || (events?.length ?? 0) < 1) return null;
 
   const pos = container === 'contained' ? 'absolute' : 'fixed';
-  const z = container === 'contained' ? 'z-10' : 'z-[50]';
+  const z = container === 'contained' ? 'z-10' : 'z-[99999]';
 
   return (
     <>

@@ -120,14 +120,14 @@
 </action>
 
 
-	<layer name="logo1" url="skin/logo1.png" alpha="0" scale="1" height.desktop="20%" height.mobile="15%" height.tablet="20%" width="prop" enabled="false" keep="true" zorder="999" align="topleft" visible="true" x="2.5%" /> 
-	<layer name="logo2" url="skin/logo2.png" alpha="0" scale="1" height.desktop="20%" height.mobile="15%" height.tablet="20%" width="prop" enabled="false" keep="true" zorder="999" align="topleft" visible="true" x="2.5%" />
-	<layer name="logo3" url="skin/logo3.png" alpha="0" scale="1" height.desktop="20%" height.mobile="15%" height.tablet="20%" width="prop" enabled="false" keep="true" zorder="999" align="topleft" visible="true" x="2.5%" />
-	<layer name="logo4" url="skin/logo4.png" alpha="0" scale="1" height.desktop="20%" height.mobile="15%" height.tablet="20%" width="prop" enabled="false" keep="true" zorder="999" align="topleft" visible="true" x="2.5%" />
+	<layer name="logo1" url="skin/logo1.png" alpha="0" scale="1" height.desktop="20%" height.mobile="15%" height.tablet="20%" width="prop" enabled="false" keep="true" align="topleft" visible="true" x="2.5%" /> 
+	<layer name="logo2" url="skin/logo2.png" alpha="0" scale="1" height.desktop="20%" height.mobile="15%" height.tablet="20%" width="prop" enabled="false" keep="true" align="topleft" visible="true" x="2.5%" />
+	<layer name="logo3" url="skin/logo3.png" alpha="0" scale="1" height.desktop="20%" height.mobile="15%" height.tablet="20%" width="prop" enabled="false" keep="true" align="topleft" visible="true" x="2.5%" />
+	<layer name="logo4" url="skin/logo4.png" alpha="0" scale="1" height.desktop="20%" height.mobile="15%" height.tablet="20%" width="prop" enabled="false" keep="true" align="topleft" visible="true" x="2.5%" />
 
-<layer name="mata" url="skin/Mata.png" scale="1" height="prop" width="20%" keep="true" zorder="999" align="bottomright" visible="true" enabled="false" x="20" y="20" devices="desktop" />
-<layer name="mata" url="skin/Mata.png" scale="1" height="prop" width="20%" keep="true" zorder="999" align="bottomright" visible="true" enabled="false" x="20" y="20" devices="tablet" />
-<layer name="mata" url="skin/Mata.png" scale="1" height="prop" width="55%" keep="true" zorder="999" align="topright" visible="true" enabled="false" x="20" y="20" devices="mobile" />
+<layer name="mata" url="skin/Mata.png" scale="1" height="prop" width="20%" keep="true" align="bottomright" visible="true" enabled="false" x="20" y="20" devices="desktop" />
+<layer name="mata" url="skin/Mata.png" scale="1" height="prop" width="20%" keep="true" align="bottomright" visible="true" enabled="false" x="20" y="20" devices="tablet" />
+<layer name="mata" url="skin/Mata.png" scale="1" height="prop" width="55%" keep="true" align="topright" visible="true" enabled="false" x="20" y="20" devices="mobile" />
 
 	<scene name="scene_oakridge_map" title="oakridge map" onstart="startlogos" thumburl="panos/oakridge_map.tiles/thumb.jpg" lat="" lng="" alt="" heading="">
 		
